@@ -1,0 +1,114 @@
+.foot-brand-main {
+  font-family: "Fraunces";
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: .5px;
+  color: #fff;
+}
+
+.foot-brand-sub {
+  margin-top: 3px;
+  font-family: "Poppins";
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: #e8b9c6;
+}
+
+.foot-desc-txt {
+  margin-top: 18px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 1.8;
+  color: #c9b7bc;
+  max-width: 260px;
+}
+
+.sns-context {
+  margin-top: 20px;
+  width: 137px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.foot-category-title {
+  width: auto;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  line-height: 20px;
+  color: #e8b9c6;
+}
+
+.foot-category-link {
+  margin-top: 18px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.foot-category-link a {
+  color: #c9b7bc;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.find-us {
+  display: flex;
+  flex-direction: row;
+}
+
+.find-us span {
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  line-height: 20px;
+  color: #e8b9c6;
+}
+
+.find-us div {
+  margin-left: 10px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 20px;
+  color: #c9b7bc;
+}
+
+.copyright-txt {
+  margin-top: 24px;
+  padding-bottom: 28px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  color: #8a767b;
+}
+
+.foot-category-title:after {
+  display: block;
+  content: "";
+  border-bottom: solid 2px var(--gold);
+  transform: scaleX(0);
+  transition: transform 250ms ease-in-out;
+  transform-origin: 0% 50%;
+}
+
+.foot-category-title:hover:after {
+  transform: scaleX(1);
+}

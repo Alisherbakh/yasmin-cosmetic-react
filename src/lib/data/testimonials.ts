@@ -1,0 +1,38 @@
+export const testimonials = [
+	{
+		name: "Emma Carter",
+		role: "Verified buyer",
+		quote: "The Rose Glow Serum changed my routine completely. My skin feels calmer within a week and the scent is so gentle.",
+		rating: 5,
+		img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80",
+		productImg: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=600&q=80",
+		productName: "Rose Glow Serum",
+	},
+	{
+		name: "Sophia Bennett",
+		role: "Verified buyer",
+		quote: "Packaging feels premium and the site makes it so easy to reorder my favorites every month. Delivery is always fast too.",
+		rating: 5,
+		img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=200&q=80",
+		productImg: "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?auto=format&fit=crop&w=600&q=80",
+		productName: "Everyday Essentials Set",
+	},
+	{
+		name: "Olivia Turner",
+		role: "Verified buyer",
+		quote: "Cruelty-free and it actually works. The lipstick shade range is unmatched and it lasts all day without drying my lips.",
+		rating: 5,
+		img: "https://images.unsplash.com/photo-1554151228-14d9def656e4?auto=format&fit=crop&w=200&q=80",
+		productImg: "https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?auto=format&fit=crop&w=600&q=80",
+		productName: "Velvet Matte Lipstick",
+	},
+	{
+		name: "James Cooper",
+		role: "Verified buyer",
+		quote: "Bought the self-care gift set for my wife and she has not stopped talking about it. Beautifully packaged and genuinely high quality.",
+		rating: 4,
+		img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+		productImg: "https://images.unsplash.com/photo-1596462502278-27bfdc403348?auto=format&fit=crop&w=600&q=80",
+		productName: "Self-Care Ritual Set",
+	},
+];

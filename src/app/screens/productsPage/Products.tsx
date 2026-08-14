@@ -279,14 +279,14 @@ export default function Products(props: ProductsProps) {
                 <span className={"address-ico"}>&#128205;</span>
                 <Box>
                   <div className={"address-label"}>Location</div>
-                  <div className={"address-value"}>Downtown, Tashkent</div>
+                  <div className={"address-value"}>Downtown, Seoul</div>
                 </Box>
               </Stack>
               <Stack className={"address-row"} flexDirection={"row"}>
                 <span className={"address-ico"}>&#128222;</span>
                 <Box>
                   <div className={"address-label"}>Phone</div>
-                  <div className={"address-value"}>+998 90 123 4567</div>
+                  <div className={"address-value"}>010-7171-7272</div>
                 </Box>
               </Stack>
               <Stack className={"address-row"} flexDirection={"row"}>

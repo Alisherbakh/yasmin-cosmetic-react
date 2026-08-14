@@ -407,135 +407,257 @@
 
 .basket-frame {
   position: relative;
-  padding: 10px 4px 0px 4px;
-  width: 450px;
+  padding: 0;
+  width: 400px;
   height: auto;
   display: flex;
   flex-direction: column;
-  background: #f8f8ff;
-  border-radius: 16px;
+  background: var(--cream);
+  border-radius: 20px;
+  border: 1px solid var(--hairline);
+  overflow: hidden;
 }
 
 .basket-frame .all-check-box {
-  padding: 0px 10px;
+  padding: 16px 20px;
   width: 100%;
-  height: 38px;
+  height: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
   background: var(--rose-soft);
-  border-radius: 10px 10px 0 0;
-  font-family: "Poppins";
-  font-size: 13px;
+}
+
+.basket-frame .cart-header-row {
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.basket-frame .cart-title {
+  font-family: "Fraunces";
+  font-size: 16px;
   font-weight: 500;
   color: var(--rose-dark);
 }
 
+.basket-frame .clear-all-btn {
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--rose-dark);
+  opacity: 0.75;
+}
+
+.basket-frame .clear-all-btn:hover {
+  opacity: 1;
+}
+
+.basket-frame .basket-empty {
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: var(--ink-soft);
+}
+
+.basket-frame .basket-empty p {
+  margin-top: 10px;
+  font-family: "Poppins";
+  font-size: 13px;
+}
+
 .basket-frame .basket-info-box {
   position: relative;
-  margin-top: 6px;
   width: 100%;
   height: auto;
   display: flex;
   flex-direction: row;
   align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid var(--hairline);
+  border-radius: 14px;
+  box-sizing: border-box;
 }
 
 .basket-info-box .product-img {
-  width: 60px;
-  height: 60px;
-  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
-  border-radius: 29px;
+  width: 54px;
+  height: 54px;
+  flex-shrink: 0;
+  object-fit: cover;
+  border-radius: 12px;
+  background: var(--rose-soft);
+}
+
+.basket-info-box .product-divider {
+  width: 1px;
+  align-self: stretch;
+  background: var(--hairline);
+  flex-shrink: 0;
+}
+
+.basket-info-box .product-meta {
+  flex: 1;
+  min-width: 0;
 }
 
 .basket-info-box .product-name {
-  margin-left: 11px;
-  width: 185px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 30px;
-  color: #000000;
-}
-
-.basket-info-box .product-price {
-  width: 80px;
+  display: block;
   font-family: "Poppins";
   font-style: normal;
   font-weight: 600;
-  font-size: 15px;
-  line-height: 22px;
+  font-size: 13.5px;
+  line-height: 18px;
+  color: var(--ink);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.basket-info-box .product-price {
+  margin-top: 3px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 18px;
   color: var(--rose);
 }
 
-.basket-info-box
-  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
-  padding: 6.5px 14px;
+.basket-info-box .col-2 {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+  border: 1px solid var(--hairline);
+  border-radius: 20px;
+  overflow: hidden;
 }
 
-.basket-info-box .css-ece9u5 {
-  min-width: 72px;
+.basket-info-box .col-2 button {
+  width: 24px;
+  height: 24px;
+  border: none;
+  background: var(--blush);
+  color: var(--rose);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.basket-info-box .col-2 .qty-count {
+  width: 24px;
+  text-align: center;
+  font-family: "Poppins";
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ink);
 }
 
 .basket-frame .cancel-btn {
-  position: absolute;
-  top: 33%;
-  right: 2%;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--ink-soft);
   cursor: pointer;
 }
 
+.basket-frame .cancel-btn:hover {
+  background: var(--rose-soft);
+  color: var(--rose);
+}
+
 .basket-frame .basket-order {
-  margin-top: 10px;
   width: 100%;
-  height: 64px;
+  padding: 16px 20px;
   display: flex;
   flex-direction: row;
-  justify-content: space-evenly;
+  justify-content: space-between;
   align-items: center;
-  border-top: 1px solid rgba(0, 0, 0, 0.5);
+  gap: 14px;
+  border-top: 1px solid var(--hairline);
+  background: var(--cream);
+  box-sizing: border-box;
+}
+
+.basket-order .basket-total-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.basket-order .total-label {
+  font-family: "Poppins";
+  font-size: 11px;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .basket-order .price {
-  width: 200px;
-  display: flex;
-  font-family: "Poppins";
+  font-family: "Fraunces";
   font-style: normal;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 20px;
-  line-height: 30px;
-  color: #000000;
+  line-height: 26px;
+  color: var(--ink);
+}
+
+.basket-order .order-btn {
+  background: var(--rose);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 22px;
+  font-family: "Poppins";
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: none;
+  box-shadow: none;
+  flex-shrink: 0;
+}
+
+.basket-order .order-btn:hover {
+  background: var(--rose-dark);
+  box-shadow: none;
 }
 
 .basket-frame .orders-wrapper {
   position: relative;
-  overflow: hidden;
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  overflow-y: scroll;
+  gap: 10px;
 }
 
 .basket-frame .orders-wrapper::-webkit-scrollbar {
-  width: 10px;
+  width: 6px;
 }
 
 .basket-frame .orders-wrapper::-webkit-scrollbar-thumb {
-  background-color: #888;
-  border-radius: 5px;
+  background-color: var(--hairline);
+  border-radius: 4px;
 }
 
 .basket-frame .orders-wrapper::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: transparent;
 }
 
 .basket-frame .orders-main-wrapper {
   position: relative;
-  overflow: hidden;
-  margin-top: 10px;
   width: 100%;
-  height: 260px;
-  display: flex;
-  flex-direction: column;
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 14px 16px;
+  box-sizing: border-box;
 }

@@ -1,182 +1,293 @@
+:root {
+  --rose: #a92e53;
+  --rose-dark: #7d2140;
+  --rose-soft: #f6e2e8;
+  --blush: #fdf6f4;
+  --gold: #c6a15b;
+  --ink: #241b1e;
+  --ink-soft: #6b5f62;
+  --cream: #fffdfb;
+  --hairline: #ece1e0;
+}
+
 .help-page {
   width: 100%;
   height: auto;
   display: flex;
-  background: #f8f8ff;
+  background: var(--cream);
 }
 
 .help-page .help-container {
-  margin-top: 50px;
-  margin-bottom: 50px;
-  flex-direction: row;
-}
-
-.help-page .help-menu {
-  width: 100%;
-  height: 60px;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  border-bottom: 1px solid #f8f8ff;
-}
-
-.help-page .help-menu .table-list {
-  display: flex;
-  justify-content: space-between;
-}
-
-.help-page .css-1gsv261 {
-  width: 75%;
-}
-
-.help-page .css-heg063-MuiTabs-flexContainer {
-  justify-content: space-between;
-}
-
-.help-page .css-19kzrtu {
-  padding-top: 24px;
-}
-
-.help-page .help-main-content {
-  width: 100%;
-  height: 1000px;
-}
-
-.help-page .rules-box {
-  padding: 24px;
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: #f8f8ff;
-  border: 1px solid #ededed;
-  box-shadow: 0px 20px 30px rgba(25, 25, 46, 0.04);
-  border-radius: 8px;
-}
-
-.rules-box .rules-frame {
-  width: 100%;
-  height: 100%;
+  margin-top: 44px;
+  margin-bottom: 70px;
   display: flex;
   flex-direction: column;
 }
 
-.rules-box .rules-frame p {
-  border-bottom: 1px solid #dddddd;
-  color: #000000;
-  font-family: "Roboto", "Helvetica", "Arial", sans-serif;
-  font-weight: 400;
-  font-size: 1rem;
-  letter-spacing: 0.00938em;
+.help-page .page-title {
+  font-family: "Fraunces";
+  font-weight: 500;
+  font-size: 26px;
+  color: var(--ink);
+  margin-bottom: 6px;
 }
 
-.help-page .accordion-menu {
-  width: 100%;
-  height: auto;
+.help-page .page-sub {
+  font-family: "Poppins";
+  font-size: 14px;
+  color: var(--ink-soft);
+  margin-bottom: 28px;
+}
+
+/** TABS **/
+
+.help-page .help-tabs {
+  min-height: auto;
+  margin-bottom: 22px;
+}
+
+.help-page .help-tabs .MuiTabs-flexContainer {
+  gap: 8px;
+}
+
+.help-page .help-tabs .MuiTabs-indicator {
+  display: none;
+}
+
+.help-page .help-tabs .MuiTab-root {
+  padding: 10px 22px;
+  min-height: auto;
+  border-radius: 20px;
+  border: 1px solid var(--hairline);
+  background: #fff;
+  font-family: "Poppins";
+  font-size: 13px;
+  font-weight: 500;
+  text-transform: none;
+  color: var(--ink-soft);
+}
+
+.help-page .help-tabs .MuiTab-root.Mui-selected {
+  background: var(--rose);
+  border-color: var(--rose);
+  color: #fff;
+  font-weight: 600;
+}
+
+/** CARD **/
+
+.help-page .help-card {
+  background: #fff;
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
+  box-sizing: border-box;
+}
+
+.help-page .help-tab-panel {
+  padding: 32px !important;
+}
+
+/** TERMS **/
+
+.help-page .terms-list {
   display: flex;
   flex-direction: column;
 }
 
-.help-page .admin-letter-box {
-  padding: 60px;
-  width: 100%;
-  height: auto;
+.help-page .terms-item {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background: #f8f8ff;
-  border: 1px solid #ededed;
-  box-shadow: 0px 20px 30px rgba(25, 25, 46, 0.04);
-  border-radius: 8px;
+  gap: 16px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--hairline);
 }
 
-.help-page .admin-letter-box .admin-letter-container {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
+.help-page .terms-item:last-child {
+  border-bottom: none;
 }
 
-.help-page .admin-letter-container .admin-letter-frame {
-  margin-top: 30px;
-  display: flex;
-  flex-direction: column;
-}
-
-.help-page .admin-letter-frame span {
-  font-family: "ABeeZee";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 24px;
-  line-height: 28px;
-  color: #140342;
-}
-
-.help-page .admin-letter-frame p {
-  margin-top: 20px;
-  font-family: "Sedan";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 26px;
-  color: #4f547b;
-}
-
-.help-page .admin-letter-container .admin-letter-frame {
-  display: flex;
-  flex-direction: column;
-}
-
-.help-page .admin-letter-frame .admin-input-box {
-  margin-top: 30px;
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.help-page .admin-letter-frame .admin-input-box label {
-  font-family: "Verdana";
-  font-style: normal;
+.help-page .terms-num {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--rose-soft);
+  color: var(--rose);
+  font-family: "Poppins";
   font-weight: 700;
-  font-size: 16px;
-  line-height: 19px;
-  color: #140342;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.help-page .admin-letter-frame .admin-input-box input {
-  margin-top: 10px;
-  padding: 20px;
-  width: 100%;
-  height: 60px;
-  display: flex;
-  background: #f8f8ff;
-  border: 1px solid #dddddd;
-  border-radius: 8px;
-  font-family: "Verdana";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 26px;
-  color: #4f547b;
+.help-page .terms-text {
+  font-family: "Poppins";
+  font-size: 14px;
+  line-height: 1.7;
+  color: var(--ink-soft);
+  padding-top: 3px;
 }
 
-.help-page .admin-letter-frame .admin-input-box textarea {
-  margin-top: 10px;
-  padding: 20px;
-  width: 100%;
-  height: 150px;
+/** FAQ **/
+
+.help-page .faq-list {
   display: flex;
-  background: #f8f8ff;
-  border: 1px solid #dddddd;
-  border-radius: 8px;
-  font-family: "Verdana";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 26px;
-  color: #4f547b;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.help-page .faq-item {
+  border: 1px solid var(--hairline) !important;
+  border-radius: 14px !important;
+  box-shadow: none !important;
+  overflow: hidden;
+}
+
+.help-page .faq-item::before {
+  display: none;
+}
+
+.help-page .faq-item .MuiAccordionSummary-root {
+  padding: 6px 20px;
+}
+
+.help-page .faq-question {
+  font-family: "Fraunces" !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  color: var(--ink);
+}
+
+.help-page .faq-item .MuiAccordionSummary-expandIconWrapper {
+  color: var(--rose);
+}
+
+.help-page .faq-answer {
+  font-family: "Poppins" !important;
+  font-size: 13px !important;
+  line-height: 1.7 !important;
+  color: var(--ink-soft) !important;
+}
+
+/** CONTACT **/
+
+.help-page .contact-grid {
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.help-page .contact-info {
+  flex: 1;
+}
+
+.help-page .contact-info h3 {
+  font-family: "Fraunces";
+  font-size: 19px;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+
+.help-page .contact-info p {
+  font-family: "Poppins";
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin-bottom: 22px;
+}
+
+.help-page .contact-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: "Poppins";
+  font-size: 13px;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+
+.help-page .contact-row .ic {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--rose-soft);
+  color: var(--rose);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.help-page .contact-form {
+  flex: 1.4;
+  width: 100%;
+}
+
+.help-page .field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.help-page .field label {
+  font-family: "Poppins";
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 6px;
+  display: block;
+}
+
+.help-page .field input,
+.help-page .field textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--hairline);
+  background: var(--blush);
+  font-family: "Poppins";
+  font-size: 13px;
+  color: var(--ink);
+  outline: none;
+  box-sizing: border-box;
+}
+
+.help-page .field input:focus,
+.help-page .field textarea:focus {
+  border-color: var(--rose);
+}
+
+.help-page .field textarea {
+  min-height: 110px;
+  resize: vertical;
+}
+
+.help-page .send-box {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 6px;
+}
+
+.help-page .send-btn {
+  background: var(--rose);
+  color: #fff;
+  padding: 13px 30px;
+  border-radius: 22px;
+  font-family: "Poppins";
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: none;
+  box-shadow: none;
+}
+
+.help-page .send-btn:hover {
+  background: var(--rose-dark);
+  box-shadow: none;
+}
+
+@media (max-width: 700px) {
+  .help-page .contact-grid {
+    flex-direction: column;
+  }
 }

@@ -12,9 +12,117 @@
 }
 
 .home-navbar-hero {
+  position: relative;
   width: 100%;
+  min-height: 640px;
+  overflow: hidden;
   background: linear-gradient(180deg, var(--rose-soft) 0%, var(--blush) 65%, var(--cream) 100%);
   padding-bottom: 60px;
+  box-sizing: border-box;
+}
+
+/* Rotating full-bleed hero background photos */
+
+.home-navbar-hero .hero-bg-layers {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.home-navbar-hero .hero-bg-layer {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center 22%;
+  opacity: 0;
+  animation: heroBgFade 24s infinite;
+}
+
+.home-navbar-hero .hero-bg-layer-1 {
+  background-image: url("https://images.unsplash.com/photo-1722109172069-15817b3cf2fa?w=1800&h=1200&fit=crop&auto=format&q=80");
+  animation-delay: 0s;
+}
+
+.home-navbar-hero .hero-bg-layer-2 {
+  background-image: url("https://images.unsplash.com/photo-1593260853607-d0e0f639bdab?w=1800&h=1200&fit=crop&auto=format&q=80");
+  animation-delay: -6s;
+}
+
+.home-navbar-hero .hero-bg-layer-3 {
+  background-image: url("https://images.unsplash.com/photo-1605187477857-e56a004da7fa?w=1800&h=1200&fit=crop&auto=format&q=80");
+  animation-delay: -12s;
+}
+
+.home-navbar-hero .hero-bg-layer-4 {
+  background-image: url("https://images.unsplash.com/photo-1568015300856-05e12413cb11?w=1800&h=1200&fit=crop&auto=format&q=80");
+  animation-delay: -18s;
+}
+
+@keyframes heroBgFade {
+  0% { opacity: 1; }
+  22% { opacity: 1; }
+  30% { opacity: 0; }
+  92% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.home-navbar-hero .hero-scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg,
+    rgba(60, 15, 28, 0.42) 0%,
+    rgba(60, 15, 28, 0.3) 45%,
+    rgba(60, 15, 28, 0.5) 100%
+  );
+}
+
+.home-navbar-hero .hero-badge {
+  position: absolute;
+  z-index: 2;
+  top: 36px;
+  right: 48px;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
+  padding: 10px 16px;
+  gap: 8px;
+  font-family: "Poppins";
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.home-navbar-hero .hero-badge-ico {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.home-navbar-hero .hero-caption {
+  position: absolute;
+  z-index: 2;
+  right: 48px;
+  bottom: 44px;
+  background: rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-family: "Fraunces";
+  font-style: italic;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 1.4;
+  color: #fff;
 }
 
 .home-navbar .navbar-container {
@@ -24,6 +132,8 @@
 }
 
 .home-navbar .hero-container {
+  position: relative;
+  z-index: 2;
   padding-top: 40px;
 }
 
@@ -160,9 +270,10 @@
   font-weight: 600;
   letter-spacing: 2px;
   text-transform: uppercase;
-  color: var(--rose);
-  background: #fff;
-  border: 1px solid var(--rose-soft);
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
   padding: 7px 16px;
   border-radius: 20px;
 }
@@ -176,11 +287,12 @@
   font-weight: 500;
   line-height: 1.1;
   letter-spacing: -0.5px;
-  color: var(--ink);
+  color: #fff;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, .25);
 }
 
 .home-navbar .navbar-container .header-frame .detail .head-main-txt .brand-highlight {
-  color: var(--rose);
+  color: #f0c9d6;
 }
 
 .home-navbar .navbar-container .header-frame .detail .wel-txt {
@@ -191,7 +303,7 @@
   font-style: normal;
   font-weight: 400;
   line-height: 1.7;
-  color: var(--ink-soft);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .home-navbar .navbar-container .detail .signup {
@@ -201,9 +313,10 @@
 .home-navbar .navbar-container .detail .signup .signup-button {
   width: auto;
   height: auto;
-  padding: 16px 34px;
+  padding: 15.5px 34px;
   border-radius: 24px;
-  background: var(--rose);
+  background: transparent;
+  border: 1.5px solid #fff;
   text-align: center;
   font-family: Poppins;
   font-size: 14px;
@@ -217,7 +330,7 @@
 }
 
 .home-navbar .navbar-container .detail .signup .signup-button:hover {
-  background: var(--rose-dark);
+  background: rgba(255, 255, 255, 0.12);
   box-shadow: none;
 }
 

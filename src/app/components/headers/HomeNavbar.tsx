@@ -171,6 +171,22 @@ export default function HomeNavbar(props:HomeNavbarProps) {
       </Container>
       </div>
       <div className="home-navbar-hero">
+        <Box className={"hero-bg-layers"} aria-hidden={"true"}>
+          <Box className={"hero-bg-layer hero-bg-layer-1"} />
+          <Box className={"hero-bg-layer hero-bg-layer-2"} />
+          <Box className={"hero-bg-layer hero-bg-layer-3"} />
+          <Box className={"hero-bg-layer hero-bg-layer-4"} />
+        </Box>
+        <Box className={"hero-scrim"} />
+
+        <Stack className={"hero-badge"} flexDirection={"row"} alignItems={"center"}>
+          <Box className={"hero-badge-ico"}>&#10003;</Box>
+          Cruelty free
+        </Stack>
+        <Box className={"hero-caption"}>
+          your skin,<br />at its softest
+        </Box>
+
       <Container className="navbar-container hero-container">
         <Stack className={"header-frame"}>
           <Stack className={"detail"}>
@@ -190,14 +206,6 @@ export default function HomeNavbar(props:HomeNavbarProps) {
               ) : null}
             </Box>
           </Stack>
-          <Box className={"logo-frame"}>
-            <img className={"logo-img"} src="/img/hero-model.png" alt="Yasmin Cosmetics — your skin, at its softest" />
-            <Stack className={"logo-frame-badge"} flexDirection={"row"} alignItems={"center"}>
-              <Box className={"logo-frame-badge-ico"}>&#10003;</Box>
-              Cruelty free
-            </Stack>
-            
-          </Box>
         </Stack>
       </Container>
       </div>

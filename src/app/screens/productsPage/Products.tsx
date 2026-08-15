@@ -308,7 +308,7 @@ export default function Products(props: ProductsProps) {
             </Box>
             <Box className={"address-map-box"}>
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d96326.03685561026!2d28.92022666528895!3d41.02112846139867!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab82bea99445f%3A0x6ed7f4baceb4476c!2sMaiden&#39;s%20Tower!5e0!3m2!1sen!2skr!4v1757106097524!5m2!1sen!2skr"
+                src="https://www.google.com/maps?q=Lotte+World+Tower,+Seoul&output=embed"
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
             </Box>

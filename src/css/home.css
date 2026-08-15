@@ -97,6 +97,12 @@
   cursor: pointer;
   width: 100%;
   min-width: 0;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.homepage .pcard:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 18px 34px -14px rgba(120, 40, 60, 0.28);
 }
 
 .homepage .pcard-img {

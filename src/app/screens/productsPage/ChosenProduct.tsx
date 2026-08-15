@@ -47,6 +47,7 @@ export default function ChosenProduct(props: ChosenProductsProps) {
   const { chosenProduct } = useSelector(chosenProductRetriever);
   const { store } = useSelector(storeRetriever);
   const [activeImage, setActiveImage] = useState<number>(0);
+  const [rating, setRating] = useState<number>(0);
 
   useEffect(() => {
     const product = new ProductService();
@@ -63,6 +64,7 @@ export default function ChosenProduct(props: ChosenProductsProps) {
 
   useEffect(() => {
     setActiveImage(0);
+    setRating(0);
   }, [productId]);
 
 
@@ -104,6 +106,17 @@ export default function ChosenProduct(props: ChosenProductsProps) {
               {chosenProduct.productCollection} · {chosenProduct.productVolume}
             </span>
             <h1 className={"product-name"}>{chosenProduct.productName}</h1>
+            <Stack className={"stars"} flexDirection={"row"}>
+              {[1, 2, 3, 4, 5].map((value) => (
+                <span
+                  key={value}
+                  className={`star ${value <= rating ? "filled" : ""}`}
+                  onClick={() => setRating(value)}
+                >
+                  &#9733;
+                </span>
+              ))}
+            </Stack>
             <Stack className={"meta-line"} flexDirection={"row"} alignItems={"center"} flexWrap={"wrap"}>
               Sold by <b>{store?.memberNick}</b>
               <span className={"meta-dot"} /> {store?.memberPhone}

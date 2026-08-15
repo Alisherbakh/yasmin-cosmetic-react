@@ -23,7 +23,7 @@ export default function ActiveUsers() {
       <Container>
         <Stack className={"main"}>
           <Box className={"sec-tag"}>Community</Box>
-          <Box className={"category-title"}>Active users</Box>
+          <Box className={"category-title"}>Loyal Customers</Box>
           <Stack className={"user-cards-frame"}>
             {topUsers.length !== 0 ? (
               topUsers.map((member: Member) => {
@@ -40,7 +40,7 @@ export default function ActiveUsers() {
                 );
               })
             ) : (
-              <Box className="no-data">No Active Users!</Box>
+              <Box className="no-data">No Loyal Customers!</Box>
             )}
           </Stack>
         </Stack>

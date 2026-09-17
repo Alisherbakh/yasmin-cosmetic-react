@@ -167,6 +167,22 @@
   white-space: nowrap;
 }
 
+.homepage .pcard-stars.stars {
+  display: flex;
+  gap: 2px;
+  margin-bottom: 8px;
+  cursor: default;
+}
+
+.homepage .pcard-stars.stars .star {
+  font-size: 13px;
+  color: #e4ddd9;
+}
+
+.homepage .pcard-stars.stars .star.filled {
+  color: var(--gold);
+}
+
 .homepage .pcard-desc {
   font-family: "Poppins";
   font-weight: 400;

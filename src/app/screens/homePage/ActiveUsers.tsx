@@ -34,7 +34,6 @@ export default function ActiveUsers() {
                   <Box key={member._id} className={"user-card"}>
                     <img className={"user-avatar-img"} src={imagePath} alt={member.memberNick} />
                     <Box className={"member-nickname"}>{member.memberNick}</Box>
-                    <Box className={"member-phone"}>{member.memberPhone}</Box>
                     <Box className={"member-points"}>{member.memberPoints} pts</Box>
                   </Box>
                 );

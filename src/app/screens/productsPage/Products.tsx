@@ -19,6 +19,7 @@ import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
+import StarRating from "../../components/common/StarRating";
 
 /** REDUX SLICE define process */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -206,6 +207,7 @@ export default function Products(props: ProductsProps) {
                       {product.productCollection} · {product.productVolume}
                     </div>
                     <div className={"pcard-name"}>{product.productName}</div>
+                    <StarRating productId={product._id} className={"pcard-stars"} />
                     <div className={"pcard-desc"}>
                       {product.productDesc ? product.productDesc : "No description"}
                     </div>

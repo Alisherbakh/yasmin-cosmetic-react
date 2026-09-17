@@ -1,6 +1,6 @@
 import React, { useState } from "react"; 
 import { Box, Button, Container, Stack, Typography } from "@mui/material";
-import { Link, Route, Switch, useLocation } from "react-router-dom";
+import { Link, Route, Switch, useLocation, useHistory } from "react-router-dom";
 import  HomePage  from "./screens/homePage";
 import  ProductsPage  from "./screens/productsPage";
 import  OrdersPage  from "./screens/ordersPage";
@@ -25,6 +25,7 @@ import { useGlobals } from "./hooks/useGlobals";
 function App() {
   
     const location = useLocation();
+    const history = useHistory();
     const {setAuthMember} = useGlobals();
     const { cartItems, onAdd, onRemove, onDelete, onDeleteAll} = useBasket();
     const [signupOpen, setSignupOpen] = useState<boolean>(false);
@@ -47,6 +48,8 @@ function App() {
 
         await sweetTopSuccessAlert("success", 700);
         setAuthMember(null);
+        setAnchorEl(null);
+        history.push("/");
       } catch (err){
         console.log(err);
         sweetErrorHandling(Messages.error1);
@@ -54,8 +57,8 @@ function App() {
     };
 
   return (
-    <>
-  {location.pathname === "/" ? (<HomeNavbar 
+    <div className={"app-shell"}>
+  {location.pathname === "/" ? (<HomeNavbar
   cartItems=
   {cartItems} 
   onAdd={onAdd} 
@@ -83,6 +86,7 @@ function App() {
     handleCloseLogout={handleCloseLogout}
     handleLogoutRequest={handleLogoutRequest}
     /> )}
+        <main className={"app-body"}>
         <Switch>
           <Route path="/products">
             <ProductsPage onAdd={onAdd} />
@@ -101,15 +105,16 @@ function App() {
             {/* home har doim oxirida yaziladi sabab hammasida slash(/) borligi u-ch */}
           </Route>
         </Switch>
+        </main>
         <Footer />
 
-        <AuthenticationModal 
+        <AuthenticationModal
         signupOpen={signupOpen}
         loginOpen={loginOpen}
         handleLoginClose={handleLoginClose}
         handleSignupClose={handleSignupClose}
         />
-      </>
+      </div>
   );
 };
 

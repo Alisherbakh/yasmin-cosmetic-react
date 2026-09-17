@@ -179,13 +179,6 @@ export default function HomeNavbar(props:HomeNavbarProps) {
         </Box>
         <Box className={"hero-scrim"} />
 
-        <Stack className={"hero-badge"} flexDirection={"row"} alignItems={"center"}>
-          <Box className={"hero-badge-ico"}>&#10003;</Box>
-          Cruelty free
-        </Stack>
-        <Box className={"hero-caption"}>
-          your skin,<br />at its softest
-        </Box>
 
       <Container className="navbar-container hero-container">
         <Stack className={"header-frame"}>

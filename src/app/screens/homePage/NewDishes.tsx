@@ -9,6 +9,7 @@ import { createSelector } from "reselect";
 import { retrieveNewDishes } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { serverApi } from "../../../lib/config";
+import StarRating from "../../components/common/StarRating";
 
 /** REDUX SELECTOR define process */
 const newDishesRetriever = createSelector(
@@ -51,6 +52,7 @@ const chooseDishHandler = (id: string) => {
                     </Box>
                     <Box className={"pcard-body"}>
                       <Box className={"pcard-name"}>{product.productName}</Box>
+                      <StarRating productId={product._id} className={"pcard-stars"} />
                       <Box className={"pcard-desc"}>
                         {product.productDesc ? product.productDesc : "No description"}
                       </Box>

@@ -10,6 +10,7 @@ import theme from "./app/MaterialTheme";
 import { BrowserRouter as Router } from "react-router-dom";
 import "./css/index.css";
 import ContextProvider from "./app/context/ContextProvider";
+import { SocketProvider } from "./app/context/SocketContext";
 
 const container = document.getElementById("root")!;
 const root = createRoot(container);
@@ -18,12 +19,14 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>  {/**reduxni support qiladi  */ }
       <ContextProvider>
+        <SocketProvider>
         <ThemeProvider theme={theme}>   {/** Mui ni support qiladi   */ }
         <CssBaseline />
         <Router>
           <App />
         </Router>
        </ThemeProvider>
+       </SocketProvider>
       </ContextProvider>
     </Provider>
   </React.StrictMode>,

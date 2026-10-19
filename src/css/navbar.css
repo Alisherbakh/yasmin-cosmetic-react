@@ -745,6 +745,11 @@
   box-shadow: none;
 }
 
+.basket-order .order-btn.Mui-disabled {
+  color: #fff;
+  opacity: 0.6;
+}
+
 .basket-frame .orders-wrapper {
   position: relative;
   width: 100%;
@@ -773,4 +778,207 @@
   overflow-y: auto;
   padding: 14px 16px;
   box-sizing: border-box;
+}
+
+/** MOBILE MENU (drawer) **/
+
+.mobile-menu-btn {
+  display: none !important;
+}
+
+.MuiDrawer-paper.mobile-drawer {
+  width: 280px;
+  max-width: 85vw;
+  background: var(--cream);
+  display: flex;
+  flex-direction: column;
+}
+
+.mobile-drawer .mobile-drawer-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 16px 18px 24px;
+  background: linear-gradient(180deg, var(--rose-soft) 0%, var(--blush) 100%);
+  border-bottom: 1px solid var(--hairline);
+}
+
+.mobile-drawer .brand-logo-main {
+  font-family: "Fraunces";
+  font-size: 21px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0.5px;
+  color: var(--rose);
+}
+
+.mobile-drawer .brand-logo-sub {
+  margin-top: 3px;
+  font-family: "Poppins";
+  font-size: 9px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: var(--gold);
+}
+
+.mobile-drawer .mobile-drawer-links {
+  padding: 12px 0;
+}
+
+.mobile-drawer .mobile-drawer-links a {
+  padding: 14px 24px;
+  font-family: "Poppins";
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  border-left: 3px solid transparent;
+}
+
+.mobile-drawer .mobile-drawer-links a.active {
+  color: var(--rose);
+  font-weight: 600;
+  background: var(--blush);
+  border-left-color: var(--gold);
+}
+
+.mobile-drawer .mobile-drawer-foot {
+  margin-top: auto;
+  padding: 20px 24px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  border-top: 1px solid var(--hairline);
+}
+
+.mobile-drawer .drawer-btn {
+  background: var(--rose);
+  color: #fff;
+  padding: 11px;
+  border-radius: 22px;
+  font-family: "Poppins";
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: none;
+  box-shadow: none;
+}
+
+.mobile-drawer .drawer-btn:hover {
+  background: var(--rose-dark);
+}
+
+.mobile-drawer .drawer-btn.ghost {
+  background: #fff;
+  color: var(--rose);
+  border: 1px solid var(--hairline);
+}
+
+.mobile-drawer .drawer-btn.ghost:hover {
+  background: var(--blush);
+}
+
+/** RESPONSIVE **/
+
+@media (max-width: 960px) {
+  .home-navbar .navbar-container .menu .links,
+  .other-navbar .navbar-container .menu .links {
+    min-width: 0;
+    gap: 8px;
+    justify-content: flex-end;
+  }
+
+  .home-navbar .nav-item,
+  .other-navbar .nav-item {
+    display: none;
+  }
+
+  .mobile-menu-btn {
+    display: inline-flex !important;
+    color: var(--ink) !important;
+  }
+}
+
+@media (max-width: 600px) {
+  .home-navbar .nav-login,
+  .other-navbar .nav-login {
+    display: none;
+  }
+
+  .home-navbar .navbar-container,
+  .other-navbar .navbar-container {
+    padding-top: 14px;
+  }
+
+  .home-navbar .navbar-container .menu .brand-logo,
+  .other-navbar .navbar-container .menu .brand-logo {
+    width: auto;
+  }
+
+  .home-navbar .navbar-container .menu .brand-logo .brand-logo-main,
+  .other-navbar .navbar-container .menu .brand-logo .brand-logo-main {
+    font-size: 20px;
+  }
+
+  .home-navbar .navbar-container .menu .user-avatar,
+  .other-navbar .navbar-container .menu .user-avatar {
+    width: 38px;
+    height: 38px;
+  }
+
+  .other-navbar {
+    height: auto;
+    padding-bottom: 14px;
+  }
+
+  /* hero */
+  .home-navbar-hero {
+    min-height: 500px;
+    padding-bottom: 40px;
+  }
+
+  .home-navbar .hero-container {
+    padding-top: 10px;
+  }
+
+  .home-navbar .navbar-container .header-frame {
+    margin-top: 36px;
+  }
+
+  .home-navbar .navbar-container .header-frame .detail,
+  .home-navbar .navbar-container .header-frame .detail .head-main-txt,
+  .home-navbar .navbar-container .header-frame .detail .wel-txt {
+    width: 100%;
+  }
+
+  .home-navbar .navbar-container .header-frame .detail .head-main-txt {
+    margin-top: 16px;
+    font-size: 34px;
+  }
+
+  .home-navbar .navbar-container .header-frame .detail .wel-txt {
+    margin-top: 14px;
+    font-size: 14px;
+  }
+
+  .home-navbar .navbar-container .detail .signup {
+    margin-top: 24px;
+  }
+
+  .home-navbar .navbar-container .detail .signup .signup-button {
+    padding: 13px 30px;
+  }
+
+  /* basket dropdown */
+  .basket-frame {
+    width: calc(100vw - 32px);
+    max-width: 400px;
+  }
+
+  .basket-frame .basket-order {
+    padding: 14px 16px;
+  }
+
+  .basket-order .order-btn {
+    padding: 11px 18px;
+  }
 }

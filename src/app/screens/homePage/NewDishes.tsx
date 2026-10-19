@@ -10,6 +10,8 @@ import { retrieveNewDishes } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { serverApi } from "../../../lib/config";
 import StarRating from "../../components/common/StarRating";
+import ProductCardSkeleton from "../../components/common/ProductCardSkeleton";
+import { handleImageError } from "../../../lib/image";
 
 /** REDUX SELECTOR define process */
 const newDishesRetriever = createSelector(
@@ -17,13 +19,15 @@ const newDishesRetriever = createSelector(
   (newDishes) => ({ newDishes })
 );
 
+interface NewDishesProps {
+  loading: boolean;
+}
 
-export default function NewDishes() {
 
+export default function NewDishes(props: NewDishesProps) {
+const { loading } = props;
 const { newDishes } = useSelector(newDishesRetriever); // selector calling
 const history = useHistory();
-
-console.log("newDishes:", newDishes);
 
 const chooseDishHandler = (id: string) => {
   history.push(`/products/${id}`);
@@ -39,14 +43,25 @@ const chooseDishHandler = (id: string) => {
             </Box>
           </Stack>
           <Stack className={"cards-frame"}>
-            {newDishes.length !== 0 ? (
+            {loading ? (
+              [0, 1, 2, 3].map((index) => <ProductCardSkeleton key={index} />)
+            ) : newDishes.length !== 0 ? (
               newDishes.map((product: Product) => {
                 const imagePath = `${serverApi}/${product.productImages[0]}`;
                 const sizeVolume = product.productVolume;
                 return (
-                  <Box key={product._id} className={"pcard"} onClick={() => chooseDishHandler(product._id)}>
+                  <Box
+                    key={product._id}
+                    className={"pcard"}
+                    role={"link"}
+                    tabIndex={0}
+                    onClick={() => chooseDishHandler(product._id)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") chooseDishHandler(product._id);
+                    }}
+                  >
                     <Box className={"pcard-img"}>
-                      <img src={imagePath} alt={product.productName} />
+                      <img src={imagePath} alt={product.productName} onError={handleImageError} />
                       <span className={"pcard-chip sale"}>New · {sizeVolume}</span>
                       <span className={"pcard-fav"} onClick={(e) => e.stopPropagation()}><FavoriteBorderIcon sx={{ fontSize: 15 }} /></span>
                     </Box>

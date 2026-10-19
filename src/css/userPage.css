@@ -250,3 +250,63 @@
   background: var(--rose-dark);
   box-shadow: none;
 }
+
+.user-page .settings .save-btn.Mui-disabled {
+  color: #fff;
+  opacity: 0.6;
+}
+
+/** RESPONSIVE **/
+
+@media (max-width: 900px) {
+  .user-page .my-page-frame {
+    flex-direction: column;
+  }
+
+  .user-page .my-page-left,
+  .user-page .my-page-right {
+    width: 100%;
+    min-width: 0;
+  }
+
+  /* profile preview first, edit form below */
+  .user-page .my-page-right {
+    order: -1;
+  }
+}
+
+@media (max-width: 600px) {
+  .user-page .page-title {
+    margin-top: 24px;
+    margin-bottom: 16px;
+    font-size: 22px;
+  }
+
+  .user-page .my-page-frame {
+    gap: 18px;
+    padding-bottom: 44px;
+  }
+
+  .user-page .card {
+    padding: 20px;
+  }
+
+  .user-page .profile-card .profile-avatar {
+    width: 110px;
+    height: 110px;
+  }
+
+  .user-page .settings .avatar-lg {
+    width: 64px;
+    height: 64px;
+  }
+
+  .user-page .settings .field-row {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .user-page .settings .save-btn {
+    width: 100%;
+  }
+}

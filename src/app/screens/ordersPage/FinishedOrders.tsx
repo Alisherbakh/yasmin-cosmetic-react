@@ -8,6 +8,7 @@ import { retrieveFinishedOrders } from "./selector";
 import { serverApi } from "../../../lib/config";
 import { Order, OrderItem } from "../../../lib/types/order";
 import { Product } from "../../../lib/types/product";
+import { handleImageError } from "../../../lib/image";
 
 /** REDUX SELECTOR define process */
 const finishedOrdersRetriever = createSelector(
@@ -33,14 +34,16 @@ export default function FinishedOrders() {
               </Box>
               <Box className={"order-box-scroll"}>
                 {order?.orderItems?.map((item: OrderItem) => {
-                  const product: Product = order.productData.filter(
+                  const product: Product | undefined = order.productData?.find(
                     (ele: Product) => item.productId === ele._id
-                  )[0];
-                  const imagePath = `${serverApi}/${product.productImages[0]}`;
+                  );
+                  const imagePath = product?.productImages?.[0]
+                    ? `${serverApi}/${product.productImages[0]}`
+                    : "/icons/noimage-list.svg";
                   return (
                     <Box key={item._id} className={"item-row"}>
-                      <img src={imagePath} className={"item-img"} />
-                      <div className={"item-name"}>{product.productName}</div>
+                      <img src={imagePath} className={"item-img"} alt={product?.productName ?? ""} onError={handleImageError} />
+                      <div className={"item-name"}>{product?.productName ?? "Product unavailable"}</div>
                       <div className={"item-calc"}>${item.itemPrice} × {item.itemQuantity}</div>
                       <div className={"item-sub"}>${item.itemQuantity * item.itemPrice}</div>
                     </Box>
@@ -63,9 +66,9 @@ export default function FinishedOrders() {
           );
         })}
 
-        {!finishedOrders || (finishedOrders.length === 0 && (
+        {(!finishedOrders || finishedOrders.length === 0) && (
           <Box className={"no-data"}>No finished orders yet.</Box>
-        ))}
+        )}
       </Stack>
     </TabPanel>
   );

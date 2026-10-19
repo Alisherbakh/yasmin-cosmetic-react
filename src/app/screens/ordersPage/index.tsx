@@ -15,7 +15,7 @@ import { OrderStatus } from "../../../lib/enums/order.enum";
 import OrderService from "../../services/OrderService";
 import { useGlobals } from "../../hooks/useGlobals";
 import "../../../css/order.css";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import { serverApi } from "../../../lib/config";
 
 
@@ -31,7 +31,6 @@ export default function OrdersPage() {
   const {setPausedOrders,setProcessOrders,setFinishedOrders} = 
    actionDispatch(useDispatch());
    const {orderBuilder, authMember} = useGlobals();
-   const history = useHistory();
   const [value, setValue] = useState("1");
   const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
     page: 1,
@@ -40,6 +39,7 @@ export default function OrdersPage() {
   });
 
   useEffect(() => {
+    if (!authMember) return; // orders need a logged in member
     const order = new OrderService();
 
     order
@@ -57,14 +57,14 @@ export default function OrdersPage() {
     .then((data) => setFinishedOrders(data))
     .catch((err) => console.log(err));
 
-  },[orderInquiry, orderBuilder]);
+  },[orderInquiry, orderBuilder, authMember]);
 
   /** HANDLERS **/
 
   const handleChange = (e: SyntheticEvent, newValue: string) => {
     setValue(newValue);
   };
-  if (!authMember) history.push("/");
+  if (!authMember) return <Redirect to={"/"} />;
   return (
     <div className={"order-page"}>
       <Container className="order-container">
@@ -75,6 +75,8 @@ export default function OrdersPage() {
               <Tabs
                 value={value}
                 onChange={handleChange}
+                variant={"scrollable"}
+                scrollButtons={false}
                 aria-label="order status tabs"
                 className={"order-tabs"}
               >
@@ -98,6 +100,7 @@ export default function OrdersPage() {
                    ? `${serverApi}/${authMember.memberImage}`
                    : "/icons/default-user.svg"}
                   className={"order-user-avatar"}
+                  alt={authMember?.memberNick}
                 />
                 <Box>
                   <div className={"profile-name"}>{authMember?.memberNick}</div>
@@ -113,6 +116,9 @@ export default function OrdersPage() {
             </Box>
             <Box className={"side-card"}>
               <h3>Payment method</h3>
+              <p className={"demo-note"}>
+                Demo only — card details are not saved or charged.
+              </p>
               <span className={"field-label"}>Card number</span>
               <input
                 type={"text"}
@@ -148,10 +154,10 @@ export default function OrdersPage() {
                 className={"card-input"}
               />
               <div className={"cards-box"}>
-                <img src={"/icons/western-card.svg"} />
-                <img src={"/icons/master-card.svg"} />
-                <img src={"/icons/paypal-card.svg"} />
-                <img src={"/icons/visa-card.svg"} />
+                <img src={"/icons/western-card.svg"} alt={"Western Union"} />
+                <img src={"/icons/master-card.svg"} alt={"Mastercard"} />
+                <img src={"/icons/paypal-card.svg"} alt={"PayPal"} />
+                <img src={"/icons/visa-card.svg"} alt={"Visa"} />
               </div>
             </Box>
           </Stack>

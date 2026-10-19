@@ -39,6 +39,8 @@ export default function HelpPage() {
             className={"help-tabs"}
             value={value}
             onChange={handleChange}
+            variant={"scrollable"}
+            scrollButtons={false}
             aria-label="help page tabs"
           >
             <Tab label="Terms" value={"1"} />

@@ -6,6 +6,7 @@ import { serverApi } from "../../../lib/config";
 import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
 import Basket from "./Basket";
+import MobileMenu from "./MobileMenu";
 
 
 interface OtherNavbarProps {
@@ -48,29 +49,29 @@ export default function OtherNavbar(props: OtherNavbarProps ) {
                           </Box>
                         </Box>
           <Stack className="links">
-            <Box className={"hover-line"}>
+            <Box className={"hover-line nav-item"}>
               <NavLink to="/">Home</NavLink>
             </Box>
-            <Box className={"hover-line"}>
+            <Box className={"hover-line nav-item"}>
               <NavLink to="/products" activeClassName={"underline"}>
                 Products
               </NavLink>
             </Box>
             {authMember ? (
-              <Box className={"hover-line"}>
+              <Box className={"hover-line nav-item"}>
                 <NavLink to="/orders" activeClassName={"underline"}>
                   Orders
                 </NavLink>
               </Box>
             ) : null}
             {authMember ? (
-              <Box className={"hover-line"}>
+              <Box className={"hover-line nav-item"}>
                 <NavLink to="/member-page" activeClassName={"underline"}>
                   My Page
                 </NavLink>
               </Box>
             ) : null}
-            <Box className={"hover-line"}>
+            <Box className={"hover-line nav-item"}>
               <NavLink to="/help" activeClassName={"underline"}>
                 Help
               </NavLink>
@@ -80,10 +81,11 @@ export default function OtherNavbar(props: OtherNavbarProps ) {
             onAdd={onAdd} 
             onRemove={onRemove} 
             onDelete={onDelete} 
-            onDeleteAll= {onDeleteAll}/>
+            onDeleteAll= {onDeleteAll}
+            setLoginOpen={setLoginOpen}/>
 
             {!authMember ? (
-              <Box>
+              <Box className={"nav-login"}>
                 <Button variant="contained" className="login-button"
                 onClick={() => setLoginOpen(true)}
                 >
@@ -93,6 +95,7 @@ export default function OtherNavbar(props: OtherNavbarProps ) {
             ) : (
               <img
                 className="user-avatar"
+                alt={authMember.memberNick}
                 src={
                   authMember?.memberImage 
                   ? `${serverApi}/${authMember?.memberImage}` 
@@ -145,6 +148,11 @@ export default function OtherNavbar(props: OtherNavbarProps ) {
 	              	Logout
 	           </MenuItem>
             </Menu>
+            <MobileMenu
+              setSignupOpen={setSignupOpen}
+              setLoginOpen={setLoginOpen}
+              handleLogoutRequest={handleLogoutRequest}
+            />
             
           </Stack>
         </Stack>

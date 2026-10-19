@@ -6,7 +6,6 @@ import { useState } from "react";
 import { MemberUpdateInput } from "../../../lib/types/member";
 import { T } from "../../../lib/types/common";
 import { sweetErrorHandling, sweetTopSuccessAlert } from "../../../lib/sweetAlert";
-import { Message } from "@mui/icons-material";
 import { Messages, serverApi } from "../../../lib/config";
 import MemberService from "../../services/MemberService";
 
@@ -28,6 +27,7 @@ export function Settings() {
     memberImage: authMember?.memberImage,
     }
   )
+  const [saving, setSaving] = useState<boolean>(false);
 
   /** HANDLERS **/
   const memberNickHandler = (e: T) => {
@@ -63,6 +63,7 @@ export function Settings() {
         throw new Error(Messages.error3);
       }
 
+      setSaving(true);
       const member = new MemberService();
       const result = await member.updateMember(memberUpdateInput);
       setAuthMember(result);
@@ -72,18 +73,20 @@ export function Settings() {
     }catch (err) {
       console.log(err);
       sweetErrorHandling(err).then();
+    } finally {
+      setSaving(false);
     }
   };
 
   const handleImageViewer = (e: T) => {
-    const file = e.target.files[0];
-    console.log("file:", file);
+    const file = e.target.files?.[0];
+    if (!file) return; // file picker was cancelled
     const fileType = file.type,
      validateImageTypes = ["image/jpg","image/jpeg","image/png"]
 
 
     if (!validateImageTypes.includes(fileType)) {
-      sweetErrorHandling(Messages.error5).then();
+      sweetErrorHandling(new Error(Messages.error5)).then();
     } else {
       if(file) {
         memberUpdateInput.memberImage = file;
@@ -99,13 +102,13 @@ export function Settings() {
   return (
     <Box className={"settings"}>
       <Box className={"avatar-row"}>
-        <img src={memberimage} className={"avatar-lg"} />
+        <img src={memberimage} className={"avatar-lg"} alt={"Profile"} />
         <Box className={"avatar-meta"}>
           <span>JPG, JPEG, PNG formats only</span>
           <Button component="label" className={"upload-btn"} onChange={handleImageViewer}>
             <CloudDownloadIcon sx={{ fontSize: 16, mr: "6px" }} />
             Upload image
-            <input type="file" hidden />
+            <input type="file" accept={"image/png, image/jpeg"} hidden />
           </Button>
         </Box>
       </Box>
@@ -159,7 +162,9 @@ export function Settings() {
         />
       </Box>
       <Box className={"save-box"}>
-        <Button className={"save-btn"} onClick={handleSubmitButton}>Save changes</Button>
+        <Button className={"save-btn"} onClick={handleSubmitButton} disabled={saving}>
+          {saving ? "Saving..." : "Save changes"}
+        </Button>
       </Box>
     </Box>
   );

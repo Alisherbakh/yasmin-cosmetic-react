@@ -19,6 +19,8 @@ import { Member } from "../../../lib/types/member";
 import { serverApi } from "../../../lib/config";
 import { CartItem } from "../../../lib/types/search";
 import StarRating from "../../components/common/StarRating";
+import { sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
+import { handleImageError } from "../../../lib/image";
 
 /** REDUX SLICE define process */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -48,13 +50,22 @@ export default function ChosenProduct(props: ChosenProductsProps) {
   const { chosenProduct } = useSelector(chosenProductRetriever);
   const { store } = useSelector(storeRetriever);
   const [activeImage, setActiveImage] = useState<number>(0);
+  const [loadError, setLoadError] = useState<boolean>(false);
 
   useEffect(() => {
+    setLoadError(false);
     const product = new ProductService();
     product.getProduct(productId)
     .then((data) => setChosenProduct(data))
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      setLoadError(true);
+    });
 
+    setActiveImage(0);
+  }, [productId]);
+
+  useEffect(() => {
     const member = new MemberService();
     member
     .getStore()
@@ -62,12 +73,54 @@ export default function ChosenProduct(props: ChosenProductsProps) {
     .catch((err) => console.log(err));
   }, []);
 
-  useEffect(() => {
-    setActiveImage(0);
-  }, [productId]);
 
+  if (loadError) {
+    return (
+      <div className={"chosen-product"}>
+        <Container className={"pdp-wrap"}>
+          <Box className={"load-error"}>
+            We couldn't load this product. It may have been removed.
+            <Link to={"/products"}>Back to products</Link>
+          </Box>
+        </Container>
+      </div>
+    );
+  }
 
-  if (!chosenProduct) return null;
+  // show a skeleton (not the previously viewed product) until the new one has loaded
+  if (!chosenProduct || chosenProduct._id !== productId) {
+    return (
+      <div className={"chosen-product"} aria-busy={"true"}>
+        <Container className={"pdp-wrap"}>
+          <Box className={"skeleton-line w-30"} />
+          <Stack className={"pdp-grid"} flexDirection={"row"}>
+            <Box className={"gallery-col"}>
+              <Box className={"gallery-main skeleton-block"} />
+            </Box>
+            <Box className={"info-col"}>
+              <Box className={"skeleton-line w-30"} />
+              <Box className={"skeleton-line lg w-70"} />
+              <Box className={"skeleton-line w-40"} />
+              <Box className={"skeleton-line w-90"} />
+              <Box className={"skeleton-line w-90"} />
+              <Box className={"skeleton-line w-70"} />
+            </Box>
+          </Stack>
+        </Container>
+      </div>
+    );
+  }
+
+  const addToCartHandler = () => {
+    onAdd({
+      _id: chosenProduct._id,
+      quantity: 1,
+      name: chosenProduct.productName,
+      price: chosenProduct.productPrice,
+      image: chosenProduct.productImages[0],
+    });
+    sweetTopSmallSuccessAlert(`${chosenProduct.productName} added to basket`, 1500);
+  };
 
   const mainImage = `${serverApi}/${chosenProduct.productImages[activeImage]}`;
   const inStock = chosenProduct.productLeftCount > 0;
@@ -82,7 +135,7 @@ export default function ChosenProduct(props: ChosenProductsProps) {
         <Stack className={"pdp-grid"} flexDirection={"row"}>
           <Box className={"gallery-col"}>
             <Box className={"gallery-main"}>
-              <img src={mainImage} alt={chosenProduct.productName} />
+              <img src={mainImage} alt={chosenProduct.productName} onError={handleImageError} />
             </Box>
             <Stack className={"thumbs"} flexDirection={"row"}>
               {chosenProduct.productImages.map((ele: string, index: number) => {
@@ -93,7 +146,7 @@ export default function ChosenProduct(props: ChosenProductsProps) {
                     className={`thumb ${activeImage === index ? "active" : ""}`}
                     onClick={() => setActiveImage(index)}
                   >
-                    <img src={thumbPath} alt={`${chosenProduct.productName} ${index + 1}`} />
+                    <img src={thumbPath} alt={`${chosenProduct.productName} ${index + 1}`} onError={handleImageError} />
                   </Box>
                 );
               })}
@@ -127,16 +180,7 @@ export default function ChosenProduct(props: ChosenProductsProps) {
                 className={"add-btn"}
                 variant={"contained"}
                 disabled={!inStock}
-                onClick={(e) => {
-                  onAdd({
-                    _id: chosenProduct._id,
-                    quantity: 1,
-                    name: chosenProduct.productName,
-                    price: chosenProduct.productPrice,
-                    image: chosenProduct.productImages[0],
-                  });
-                  e.stopPropagation();
-                }}
+                onClick={addToCartHandler}
               >
                 Add to basket
               </Button>

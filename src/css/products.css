@@ -168,6 +168,12 @@
   color: var(--gold);
 }
 
+.products .grid4 .no-data.no-results {
+  padding: 40px 0;
+  text-transform: none;
+  font-size: 18px;
+}
+
 .products-page .pcard {
   box-sizing: border-box;
   background: #fff;
@@ -908,4 +914,219 @@
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+/** RESPONSIVE **/
+
+@media (max-width: 1100px) {
+  .products-page .grid4 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 900px) {
+  .products-page .grid4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .products-page .filter-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .products-page .products .address .address-grid {
+    flex-direction: column;
+  }
+
+  .products-page .products .address .address-info-card,
+  .products-page .products .address .address-map-box {
+    min-width: 0;
+  }
+
+  .products-page .products .brands-logo .brand-cell {
+    padding: 0 22px;
+  }
+
+  /* product detail */
+  .products-page .chosen-product .pdp-grid {
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .products-page .chosen-product .gallery-col,
+  .products-page .chosen-product .info-col {
+    width: 100%;
+  }
+
+  .products-page .chosen-product .info-col {
+    position: static;
+  }
+}
+
+@media (max-width: 600px) {
+  .products-page .products-head {
+    padding: 28px 0 24px;
+  }
+
+  .products-page .products-head .page-title {
+    font-size: 24px;
+  }
+
+  .products-page .products-head .search-row {
+    max-width: none;
+  }
+
+  .products-page .products-head .search-btn {
+    padding: 0 18px;
+  }
+
+  .products-page .filter-bar {
+    padding: 16px 0;
+    gap: 12px;
+  }
+
+  /* category pills scroll sideways instead of wrapping into many rows */
+  .products-page .cat-pills {
+    width: 100%;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+
+  .products-page .cat-pills::-webkit-scrollbar {
+    display: none;
+  }
+
+  .products-page .grid4 {
+    gap: 12px;
+  }
+
+  /* compact product cards (2 per row) */
+  .products-page .pcard-img {
+    height: 160px;
+  }
+
+  .products-page .pcard-body {
+    padding: 12px 12px 16px;
+  }
+
+  .products-page .pcard-name {
+    font-size: 13px;
+  }
+
+  .products-page .pcard-desc {
+    font-size: 11px;
+  }
+
+  .products-page .pcard-price {
+    font-size: 14px;
+  }
+
+  .products-page .pcard-chip {
+    top: 8px;
+    left: 8px;
+    font-size: 9px;
+    padding: 4px 8px;
+  }
+
+  .products-page .pcard-fav {
+    top: 8px;
+    right: 8px;
+    width: 26px;
+    height: 26px;
+  }
+
+  .products-page .pcard-cart-btn {
+    bottom: 8px;
+    right: 8px;
+    width: 34px;
+    height: 34px;
+  }
+
+  .products .grid4 .no-data {
+    font-size: 18px;
+  }
+
+  .products-page .products .pagination-section {
+    padding-bottom: 40px;
+  }
+
+  /* brands */
+  .products-page .products .brands-logo {
+    margin-top: 30px;
+    padding: 40px 0;
+  }
+
+  .products-page .products .brands-logo .category-title {
+    font-size: 24px;
+    margin-bottom: 24px;
+  }
+
+  .products-page .products .brands-logo .brand-row {
+    gap: 18px 0;
+  }
+
+  .products-page .products .brands-logo .brand-cell {
+    width: 50%;
+    padding: 0 10px;
+    border-right: none;
+    box-sizing: border-box;
+  }
+
+  .products-page .products .brands-logo .brand-cell img {
+    height: 44px;
+  }
+
+  /* address */
+  .products-page .products .address {
+    padding-top: 40px;
+    margin-bottom: 40px;
+  }
+
+  .products-page .products .address .address-info-card {
+    padding: 24px;
+  }
+
+  .products-page .products .address .title {
+    font-size: 22px;
+  }
+
+  .products-page .products .address .address-map-box iframe {
+    min-height: 260px;
+  }
+
+  /* product detail */
+  .products-page .chosen-product .pdp-wrap {
+    padding-top: 24px;
+    padding-bottom: 44px;
+  }
+
+  .products-page .chosen-product .crumb {
+    margin-bottom: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .products-page .chosen-product .gallery-main {
+    height: 320px;
+  }
+
+  .products-page .chosen-product .thumb {
+    width: 58px;
+    height: 58px;
+  }
+
+  .products-page .chosen-product .product-name {
+    font-size: 24px;
+  }
+
+  .products-page .chosen-product .buy-card {
+    padding: 20px;
+  }
+
+  .products-page .chosen-product .price {
+    font-size: 24px;
+  }
 }

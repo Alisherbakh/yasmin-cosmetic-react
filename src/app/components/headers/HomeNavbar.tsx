@@ -1,6 +1,7 @@
 import { Box, Button, Container, ListItemIcon, Menu, MenuItem, Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import Basket from "./Basket";
+import MobileMenu from "./MobileMenu";
 import React, { useEffect, useState } from "react";
 import { CartItem } from "../../../lib/types/search";
 import { useGlobals } from "../../hooks/useGlobals";
@@ -62,31 +63,31 @@ export default function HomeNavbar(props:HomeNavbarProps) {
             </NavLink>
           </Box>
           <Stack className="links">
-            <Box className={"hover-line"}>
+            <Box className={"hover-line nav-item"}>
               <NavLink to="/" activeClassName={"underline"}>
                 Home
               </NavLink>
             </Box>
-            <Box className={"hover-line"}>
+            <Box className={"hover-line nav-item"}>
               <NavLink to="/products" activeClassName={"underline"}>
                 Products
               </NavLink>
             </Box>
             {authMember ? (
-              <Box className={"hover-line"}>
+              <Box className={"hover-line nav-item"}>
                 <NavLink to="/orders" activeClassName={"underline"}>
                   Orders
                 </NavLink>
               </Box>
             ) : null}
             {authMember ? (
-              <Box className={"hover-line"}>
+              <Box className={"hover-line nav-item"}>
                 <NavLink to="/member-page" activeClassName={"underline"}>
                   My Page
                 </NavLink>
               </Box>
             ) : null}
-            <Box className={"hover-line"}>
+            <Box className={"hover-line nav-item"}>
               <NavLink to="/help" activeClassName={"underline"}>
                 Help
               </NavLink>
@@ -97,11 +98,11 @@ export default function HomeNavbar(props:HomeNavbarProps) {
             onRemove={onRemove} 
             onDelete={onDelete} 
             onDeleteAll= {onDeleteAll}
-            
+            setLoginOpen={setLoginOpen}
             />
 
             {!authMember ? (
-              <Box>
+              <Box className={"nav-login"}>
                 <Button variant="contained" className="login-button"
                 onClick={() => setLoginOpen(true)}
                 >
@@ -111,6 +112,7 @@ export default function HomeNavbar(props:HomeNavbarProps) {
             ) : (
               <img
                 className="user-avatar"
+                alt={authMember.memberNick}
                 src={
                   authMember?.memberImage 
                   ? `${serverApi}/${authMember?.memberImage}` 
@@ -165,6 +167,11 @@ export default function HomeNavbar(props:HomeNavbarProps) {
 	              	Logout
 	           </MenuItem>
             </Menu>
+            <MobileMenu
+              setSignupOpen={setSignupOpen}
+              setLoginOpen={setLoginOpen}
+              handleLogoutRequest={handleLogoutRequest}
+            />
 
           </Stack>
         </Stack>

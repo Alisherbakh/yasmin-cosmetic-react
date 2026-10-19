@@ -12,6 +12,7 @@ import { Messages, serverApi } from "../../../lib/config";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
 import OrderService from "../../services/OrderService";
+import { handleImageError } from "../../../lib/image";
 
 
 interface BasketProps {
@@ -20,20 +21,26 @@ interface BasketProps {
   onRemove: (item: CartItem) => void;
   onDelete: (item: CartItem) => void;
   onDeleteAll: () => void;
+  setLoginOpen: (isOpen: boolean) => void;
 }
 
 export default function Basket(props: BasketProps) {
-  const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
+  const { cartItems, onAdd, onRemove, onDelete, onDeleteAll, setLoginOpen } = props;
   const {authMember,setOrderBuilder} = useGlobals();
   const history = useHistory();
   const itemsPrice: number = cartItems.reduce(
     (a: number, c: CartItem) => a + c.quantity * c.price,
     0
   );
+  const itemsCount: number = cartItems.reduce(
+    (a: number, c: CartItem) => a + c.quantity,
+    0
+  );
 const shippingCost:  number = itemsPrice < 100 ? 5 : 0;
 const totalPrice = (itemsPrice + shippingCost).toFixed(1);
 
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [ordering, setOrdering] = React.useState<boolean>(false);
   const open = Boolean(anchorEl);
 
   /** HANDLERS **/
@@ -48,8 +55,13 @@ const totalPrice = (itemsPrice + shippingCost).toFixed(1);
   const proceedOrderHandler = async () => {
     try {
         handleClose()
-        if(!authMember) throw new Error(Messages.error2);
+        // not logged in: open the login form, the cart is kept
+        if (!authMember) {
+          setLoginOpen(true);
+          return;
+        }
 
+        setOrdering(true);
         const order = new OrderService();
         await order.createOrder(cartItems);
 
@@ -63,6 +75,8 @@ const totalPrice = (itemsPrice + shippingCost).toFixed(1);
     } catch(err) {
       console.log(err);
       sweetErrorHandling(err).then();
+    } finally {
+      setOrdering(false);
     }
   }
 
@@ -80,8 +94,8 @@ const totalPrice = (itemsPrice + shippingCost).toFixed(1);
         aria-expanded={open ? "true" : undefined}
         onClick={handleClick}
       >
-        <Badge badgeContent={cartItems.length} color="secondary">
-          <img src={"/icons/shopping-cart.svg"} />
+        <Badge badgeContent={itemsCount} color="secondary">
+          <img src={"/icons/shopping-cart.svg"} alt={"Basket"} />
         </Badge>
       </IconButton>
       <Menu
@@ -125,7 +139,7 @@ const totalPrice = (itemsPrice + shippingCost).toFixed(1);
               <div className={"cart-title"}>Cart is empty!</div>
               ) : (
                 <Stack flexDirection={"row"} className={"cart-header-row"}>
-                  <div className={"cart-title"}>Cart Products ({cartItems.length})</div>
+                  <div className={"cart-title"}>Cart Products ({itemsCount})</div>
                   <Stack
                     flexDirection={"row"}
                     className={"clear-all-btn"}
@@ -150,7 +164,7 @@ const totalPrice = (itemsPrice + shippingCost).toFixed(1);
                   const imagePath = `${serverApi}/${item.image}`;
                   return (
                     <Box className={"basket-info-box"} key={item._id}>
-                      <img src={imagePath} className={"product-img"} />
+                      <img src={imagePath} className={"product-img"} alt={item.name} onError={handleImageError} />
                       <Box className={"product-divider"} />
                       <Box className={"product-meta"}>
                         <span className={"product-name"}>{item.name}</span>
@@ -187,10 +201,11 @@ const totalPrice = (itemsPrice + shippingCost).toFixed(1);
               </Box>
               <Button
                 onClick={proceedOrderHandler}
+                disabled={ordering}
                 startIcon={<ShoppingCartIcon sx={{ fontSize: 16 }} />}
                 className={"order-btn"}
               >
-                Order
+                {authMember ? "Order" : "Login to order"}
               </Button>
             </Box>
           ) : (

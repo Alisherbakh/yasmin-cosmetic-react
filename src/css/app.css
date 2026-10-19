@@ -14,6 +14,112 @@
   flex-direction: column;
 }
 
+/** SweetAlert must sit above MUI modals and menus */
+.swal2-container {
+  z-index: 2000 !important;
+}
+
+/** LOADING SKELETONS (shared) **/
+
+@keyframes skeletonShimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.skeleton-block,
+.skeleton-line {
+  background: linear-gradient(90deg, var(--rose-soft) 25%, var(--blush) 50%, var(--rose-soft) 75%);
+  background-size: 200% 100%;
+  animation: skeletonShimmer 1.4s ease-in-out infinite;
+}
+
+.skeleton-line {
+  height: 12px;
+  border-radius: 6px;
+  margin-bottom: 10px;
+}
+
+.skeleton-line.lg {
+  height: 28px;
+  margin-bottom: 16px;
+}
+
+.skeleton-line.w-30 { width: 30%; }
+.skeleton-line.w-40 { width: 40%; }
+.skeleton-line.w-70 { width: 70%; }
+.skeleton-line.w-90 { width: 90%; }
+
+.pcard.pcard-skeleton {
+  pointer-events: none;
+  cursor: default;
+}
+
+/** LOAD ERROR (shared) **/
+
+.load-error {
+  grid-column: 1 / -1;
+  width: 100%;
+  padding: 60px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  font-family: "Poppins";
+  font-size: 15px;
+  color: var(--ink-soft);
+  text-align: center;
+}
+
+.load-error .retry-btn,
+.load-error a {
+  background: var(--rose);
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 20px;
+  font-family: "Poppins";
+  font-weight: 600;
+  font-size: 13px;
+  text-transform: none;
+  text-decoration: none;
+  box-shadow: none;
+}
+
+.load-error .retry-btn:hover,
+.load-error a:hover {
+  background: var(--rose-dark);
+}
+
+/** AUTH MODAL **/
+
+.auth-switch {
+  margin-top: 18px;
+  font-family: "Poppins";
+  font-size: 13px;
+  color: var(--ink-soft);
+}
+
+.auth-switch span {
+  color: var(--rose);
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.auth-switch span:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .auth-modal-img {
+    display: none;
+  }
+}
+
+/** Keyboard focus for clickable cards */
+.pcard:focus-visible {
+  outline: 2px solid var(--rose);
+  outline-offset: 2px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;

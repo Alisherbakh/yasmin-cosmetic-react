@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Statistics from "./Statistics";
 import PopularDishes from "./PopularDishes";
 import NewDishes from "./NewDishes";
@@ -25,34 +25,29 @@ const actionDispatch = (dispatch: Dispatch) => ({
 
 export default function HomePage() {
   const { setPopularDishes, setNewDishes, setTopUsers } = actionDispatch(useDispatch()); //calling Slice: Data => Store
- 
-  
+  const [productsLoading, setProductsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     // Backend server data request => Data
     const product = new ProductService();
-    product.getProducts({
+    const popularRequest = product.getProducts({
       page: 1,
       limit: 4,
       order: "productViews",
     })
-    .then((data) => {
-      console.log("data passed here:", data);
-      setPopularDishes(data);
-    })
+    .then((data) => setPopularDishes(data))
     .catch((err) => console.log(err));
 
-    product.getProducts({
+    const newRequest = product.getProducts({
       page: 1,
       limit: 4,
       order: "createdAt",
     })
-    .then((data) => {
-      console.log("data passed here:", data);
-      setNewDishes(data);
-    })
+    .then((data) => setNewDishes(data))
     .catch((err) => console.log(err));
- 
+
+    Promise.all([popularRequest, newRequest]).then(() => setProductsLoading(false));
+
      const member = new MemberService();
      member
      .getTopUsers()
@@ -64,8 +59,8 @@ export default function HomePage() {
   return (
     <div className={"homepage"}>
       <Statistics />
-      <PopularDishes />
-      <NewDishes />
+      <PopularDishes loading={productsLoading} />
+      <NewDishes loading={productsLoading} />
       <Advertisement />
       <ActiveUsers />
       <Testimonials />

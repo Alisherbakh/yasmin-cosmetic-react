@@ -297,6 +297,16 @@
   margin: 0 0 18px;
 }
 
+.order-page .side-card .demo-note {
+  margin: -10px 0 16px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--blush);
+  font-family: "Poppins";
+  font-size: 11px;
+  color: var(--ink-soft);
+}
+
 .order-page .profile-top {
   display: flex;
   align-items: center;
@@ -415,4 +425,69 @@
 .order-page .cards-box img {
   height: 22px;
   opacity: .55;
+}
+
+/** RESPONSIVE **/
+
+@media (max-width: 900px) {
+  .order-page .order-body {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .order-page .order-left,
+  .order-page .order-right {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .order-page .order-container {
+    margin-top: 24px;
+    margin-bottom: 44px;
+  }
+
+  .order-page .page-title {
+    font-size: 22px;
+    margin-bottom: 16px;
+  }
+
+  .order-page .order-tabs {
+    margin-bottom: 16px;
+  }
+
+  .order-page .order-tabs .MuiTab-root {
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+
+  .order-page .order-main-content .MuiTabPanel-root {
+    padding: 0;
+  }
+
+  .order-page .order-main-box {
+    padding: 16px;
+  }
+
+  /* item row: image | name | subtotal, unit price moves under the name */
+  .order-page .item-row {
+    flex-wrap: wrap;
+    row-gap: 2px;
+  }
+
+  .order-page .item-calc {
+    order: 3;
+    width: 100%;
+    padding-left: 66px;
+    box-sizing: border-box;
+  }
+
+  .order-page .actions .btn-pill {
+    flex: 1;
+  }
+
+  .order-page .side-card {
+    padding: 20px;
+  }
 }

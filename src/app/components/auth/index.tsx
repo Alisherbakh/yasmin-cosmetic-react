@@ -11,7 +11,7 @@ import { Message } from "@mui/icons-material";
 import { Messages } from "../../../lib/config";
 import { LoginInput, MemberInput } from "../../../lib/types/member";
 import MemberService from "../../services/MemberService";
-import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import { sweetErrorHandling, sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
 import { useGlobals } from "../../hooks/useGlobals";
 
 const useStyles = makeStyles((theme) => ({
@@ -42,10 +42,19 @@ interface AuthenticationModalProps {
   loginOpen: boolean;
   handleSignupClose: () => void;
   handleLoginClose: () => void;
+  switchToLogin: () => void;
+  switchToSignup: () => void;
 }
 
 export default function AuthenticationModal(props: AuthenticationModalProps) {
-  const { signupOpen, loginOpen, handleSignupClose, handleLoginClose } = props;
+  const {
+    signupOpen,
+    loginOpen,
+    handleSignupClose,
+    handleLoginClose,
+    switchToLogin,
+    switchToSignup,
+  } = props;
   const classes = useStyles();
   const [memberNick, setMemberNick] = useState<string>("");
   const [memberPhone, setMemberPhone] = useState<string>("");
@@ -92,10 +101,11 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       // Saving Authenticated user
       setAuthMember(result);
       handleSignupClose();
-    
+      sweetTopSmallSuccessAlert(`Welcome, ${result.memberNick}!`, 1500);
+
     } catch(err){
+      // keep the form open so the user can fix the input
       console.log(err);
-      handleSignupClose();
       sweetErrorHandling(err).then();
     }
   };
@@ -117,10 +127,11 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
       // Saving Authenticated user
       setAuthMember(result);
       handleLoginClose();
-    
+      sweetTopSmallSuccessAlert(`Welcome back, ${result.memberNick}!`, 1500);
+
     } catch(err){
+      // keep the form open so the user can fix the input
       console.log(err);
-      handleLoginClose();
       sweetErrorHandling(err).then();
     }
   }
@@ -143,29 +154,30 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
           <Stack
             className={classes.paper}
             direction={"row"}
-            sx={{ width: "800px" }}
+            sx={{ width: "800px", maxWidth: "92vw", boxSizing: "border-box" }}
           >
-            <ModalImg src={"/img/auth.webp"} alt="camera" />
-            <Stack sx={{ marginLeft: "69px", alignItems: "center" }}>
-              <h2>Signup Form</h2>
+            <ModalImg className={"auth-modal-img"} src={"/img/auth.webp"} alt="camera" />
+            <Stack sx={{ marginLeft: { xs: 0, sm: "69px" }, flex: { xs: 1, sm: "initial" }, alignItems: "center" }}>
+              <h2 id="signup-modal-title">Signup Form</h2>
               <TextField
                 sx={{ marginTop: "7px" }}
-                id="outlined-basic"
+                id="signup-username"
                 label="username"
                 variant="outlined"
                 onChange={handleUsername}
               />
               <TextField
                 sx={{ my: "17px" }}
-                id="outlined-basic"
+                id="signup-phone"
                 label="phone number"
                 variant="outlined"
                 onChange={handlePhone}
               />
               <TextField
-                id="outlined-basic"
+                id="signup-password"
                 label="password"
                 variant="outlined"
+                type="password"
                 onChange={handlePassword}
                 onKeyDown={handlePasswordKeyDown}
               />
@@ -178,6 +190,9 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                 <LoginIcon sx={{ mr: 1 }} />
                 Signup
               </Fab>
+              <p className={"auth-switch"}>
+                Already have an account? <span onClick={switchToLogin}>Login</span>
+              </p>
             </Stack>
           </Stack>
         </Fade>
@@ -199,26 +214,27 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
           <Stack
             className={classes.paper}
             direction={"row"}
-            sx={{ width: "700px" }}
+            sx={{ width: "700px", maxWidth: "92vw", boxSizing: "border-box" }}
           >
-            <ModalImg src={"/img/auth.webp"} alt="camera" />
+            <ModalImg className={"auth-modal-img"} src={"/img/auth.webp"} alt="camera" />
             <Stack
               sx={{
-                marginLeft: "65px",
-                marginTop: "25px",
+                marginLeft: { xs: 0, sm: "65px" },
+                marginTop: { xs: 0, sm: "25px" },
+                flex: { xs: 1, sm: "initial" },
                 alignItems: "center",
               }}
             >
-              <h2>Login Form</h2>
+              <h2 id="login-modal-title">Login Form</h2>
               <TextField
-                id="outlined-basic"
+                id="login-username"
                 label="username"
                 variant="outlined"
                 sx={{ my: "10px" }}
                 onChange={handleUsername}
               />
               <TextField
-                id={"outlined-basic"}
+                id={"login-password"}
                 label={"password"}
                 variant={"outlined"}
                 type={"password"}
@@ -234,6 +250,9 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                 <LoginIcon sx={{ mr: 1 }} />
                 Login
               </Fab>
+              <p className={"auth-switch"}>
+                Don't have an account? <span onClick={switchToSignup}>Sign up</span>
+              </p>
             </Stack>
           </Stack>
         </Fade>

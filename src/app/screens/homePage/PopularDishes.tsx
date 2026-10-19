@@ -10,6 +10,8 @@ import { retrievePopularDishes } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { serverApi } from "../../../lib/config";
 import StarRating from "../../components/common/StarRating";
+import ProductCardSkeleton from "../../components/common/ProductCardSkeleton";
+import { handleImageError } from "../../../lib/image";
 
 /** REDUX SELECTOR define process */
 const popularDishesRetriever = createSelector(
@@ -17,15 +19,15 @@ const popularDishesRetriever = createSelector(
   (popularDishes) => ({ popularDishes })
 );
 
+interface PopularDishesProps {
+  loading: boolean;
+}
 
 
-
-export default function PopularDishes() {
-
+export default function PopularDishes(props: PopularDishesProps) {
+  const { loading } = props;
   const { popularDishes } = useSelector(popularDishesRetriever); // selector calling
   const history = useHistory();
-
-  console.log("popularDishes:", popularDishes);
 
   const chooseDishHandler = (id: string) => {
     history.push(`/products/${id}`);
@@ -42,13 +44,24 @@ export default function PopularDishes() {
             </Box>
           </Stack>
           <Stack className="cards-frame">
-            {popularDishes.length !== 0 ? (
+            {loading ? (
+              [0, 1, 2, 3].map((index) => <ProductCardSkeleton key={index} />)
+            ) : popularDishes.length !== 0 ? (
               popularDishes.map((product: Product) => {
                 const imagePath = `${serverApi}/${product.productImages[0]}`;
                 return (
-                  <Box key={product._id} className={"pcard"} onClick={() => chooseDishHandler(product._id)}>
+                  <Box
+                    key={product._id}
+                    className={"pcard"}
+                    role={"link"}
+                    tabIndex={0}
+                    onClick={() => chooseDishHandler(product._id)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter") chooseDishHandler(product._id);
+                    }}
+                  >
                     <Box className={"pcard-img"}>
-                      <img src={imagePath} alt={product.productName} />
+                      <img src={imagePath} alt={product.productName} onError={handleImageError} />
                       <span className={"pcard-chip"}>{product.productCollection}</span>
                       <span className={"pcard-fav"} onClick={(e) => e.stopPropagation()}><FavoriteBorderIcon sx={{ fontSize: 15 }} /></span>
                     </Box>

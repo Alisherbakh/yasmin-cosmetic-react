@@ -43,6 +43,24 @@ export const sweetTopSmallSuccessAlert = async (
   }).then();
 };
 
+export const sweetConfirm = async (
+  title: string,
+  text: string = "",
+  confirmText: string = "Yes"
+): Promise<boolean> => {
+  const result = await Swal.fire({
+    icon: "question",
+    title: title,
+    text: text,
+    showCancelButton: true,
+    confirmButtonText: confirmText,
+    cancelButtonText: "Cancel",
+    confirmButtonColor: "#a92e53",
+    reverseButtons: true,
+  });
+  return result.isConfirmed;
+};
+
 export const sweetFailureProvider = (
   msg: string,
   show_button: boolean = false,

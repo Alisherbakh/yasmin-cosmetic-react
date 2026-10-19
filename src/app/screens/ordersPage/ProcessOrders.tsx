@@ -10,10 +10,10 @@ import { Messages, serverApi } from "../../../lib/config";
 import { Order, OrderItem, OrderUpdateInput } from "../../../lib/types/order";
 import { Product } from "../../../lib/types/product";
 import { useGlobals } from "../../hooks/useGlobals";
-import { T } from "../../../lib/types/common";
 import { OrderStatus } from "../../../lib/enums/order.enum";
 import OrderService from "../../services/OrderService";
-import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import { sweetConfirm, sweetErrorHandling } from "../../../lib/sweetAlert";
+import { handleImageError } from "../../../lib/image";
 
 /** REDUX SELECTOR define process */
 const processOrdersRetriever = createSelector(
@@ -34,18 +34,20 @@ export default function ProcessOrders(props: ProcessOrdersProps) {
    /** HANDLER **/
 
    // process to finished
-   const finishOrderHandler = async (e: T) => {
+   const finishOrderHandler = async (orderId: string) => {
     try{
       if (!authMember) throw new Error(Messages.error2);
-      // Payment Process is here
 
-      const orderId = e.target.value;
       const input: OrderUpdateInput = {
         orderId: orderId,
         orderStatus: OrderStatus.FINISH,
       };
 
-      const confirmation = window.confirm("Have you recieved your order?");
+      const confirmation = await sweetConfirm(
+        "Have you received your order?",
+        "The order will be marked as finished.",
+        "Yes, received"
+      );
       if (confirmation) {
         const order = new OrderService();
         await order.updateOrder(input);
@@ -76,14 +78,16 @@ export default function ProcessOrders(props: ProcessOrdersProps) {
               </Box>
               <Box className={"order-box-scroll"}>
                 {order?.orderItems?.map((item: OrderItem) => {
-                  const product: Product = order.productData.filter(
+                  const product: Product | undefined = order.productData?.find(
                     (ele: Product) => item.productId === ele._id
-                  )[0];
-                  const imagePath = `${serverApi}/${product.productImages[0]}`;
+                  );
+                  const imagePath = product?.productImages?.[0]
+                    ? `${serverApi}/${product.productImages[0]}`
+                    : "/icons/noimage-list.svg";
                   return (
                     <Box key={item._id} className={"item-row"}>
-                      <img src={imagePath} className={"item-img"} />
-                      <div className={"item-name"}>{product.productName}</div>
+                      <img src={imagePath} className={"item-img"} alt={product?.productName ?? ""} onError={handleImageError} />
+                      <div className={"item-name"}>{product?.productName ?? "Product unavailable"}</div>
                       <div className={"item-calc"}>${item.itemPrice} × {item.itemQuantity}</div>
                       <div className={"item-sub"}>${item.itemQuantity * item.itemPrice}</div>
                     </Box>
@@ -105,9 +109,8 @@ export default function ProcessOrders(props: ProcessOrdersProps) {
 
               <Box className={"actions"}>
                 <Button
-                 value={order._id}
                  className={"btn-pill btn-primary"}
-                 onClick={finishOrderHandler}
+                 onClick={() => finishOrderHandler(order._id)}
                  >
                   Verify to fulfil
                 </Button>
@@ -116,9 +119,9 @@ export default function ProcessOrders(props: ProcessOrdersProps) {
           );
         })}
 
-        {!processOrders || (processOrders.length === 0 && (
+        {(!processOrders || processOrders.length === 0) && (
           <Box className={"no-data"}>No orders in progress.</Box>
-        ))}
+        )}
       </Stack>
     </TabPanel>
   );

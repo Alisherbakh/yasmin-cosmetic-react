@@ -18,8 +18,8 @@ export default function Footer() {
   return (
     <Footers>
       <Container>
-        <Stack flexDirection={"row"} justifyContent={"space-between"} sx={{ mt: "64px", flexWrap: "wrap", rowGap: "40px" }}>
-          <Stack flexDirection={"column"} style={{ width: "300px" }}>
+        <Stack flexDirection={"row"} justifyContent={"space-between"} sx={{ mt: { xs: "44px", md: "64px" }, flexWrap: "wrap", rowGap: "40px" }}>
+          <Stack flexDirection={"column"} sx={{ width: { xs: "100%", sm: "300px" } }}>
             <Box className={"foot-brand"}>
               <Box className={"foot-brand-main"}>YASMIN</Box>
               <Box className={"foot-brand-sub"}>COSMETICS</Box>
@@ -36,7 +36,7 @@ export default function Footer() {
               <img src={"/icons/youtube.svg"} alt={"youtube"} />
             </Box>
           </Stack>
-          <Stack flexDirection={"row"} sx={{ columnGap: "80px" }}>
+          <Stack flexDirection={"row"} sx={{ columnGap: { xs: "40px", md: "80px" }, rowGap: "32px", flexWrap: "wrap" }}>
             <Stack>
               <Box>
                 <Box className={"foot-category-title"}>Shop</Box>
@@ -80,7 +80,7 @@ export default function Footer() {
         </Stack>
         <Stack
           style={{ border: "1px solid #4a3a3f", width: "100%", opacity: "0.6" }}
-          sx={{ mt: "60px" }}
+          sx={{ mt: { xs: "40px", md: "60px" } }}
         ></Stack>
         <Stack className={"copyright-txt"}>
           © 2026 Yasmin Cosmetics. All rights reserved.

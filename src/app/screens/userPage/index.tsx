@@ -2,15 +2,14 @@ import { Box, Container, Stack } from "@mui/material";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import { Settings } from "./Settings";
 import { useGlobals } from "../../hooks/useGlobals";
-import { useHistory } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 import "../../../css/userPage.css";
 import { serverApi } from "../../../lib/config";
 
 export default function UserPage() {
-  const history = useHistory();
   const { authMember } = useGlobals();
 
-  if (!authMember) history.push("/");
+  if (!authMember) return <Redirect to={"/"} />;
   return (
     <div className={"user-page"}>
       <Container>
@@ -31,6 +30,7 @@ export default function UserPage() {
                   : "/icons/default-user.svg"
                 }
                 className={"profile-avatar"}
+                alt={authMember.memberNick}
               />
               <div className={"profile-name"}>{authMember?.memberNick}</div>
               <div className={"profile-type"}>{authMember?.memberType}</div>

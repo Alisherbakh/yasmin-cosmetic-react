@@ -20,6 +20,9 @@ import { serverApi } from "../../../lib/config";
 import { useHistory } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
 import StarRating from "../../components/common/StarRating";
+import ProductCardSkeleton from "../../components/common/ProductCardSkeleton";
+import { sweetTopSmallSuccessAlert } from "../../../lib/sweetAlert";
+import { handleImageError } from "../../../lib/image";
 
 /** REDUX SLICE define process */
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -50,62 +53,94 @@ export default function Products(props: ProductsProps) {
       search: "",
   });
   const [searchText, setSearchText] = useState<string>(""); // search text based
-  const history = useHistory();  
+  const [loading, setLoading] = useState<boolean>(true);
+  const [loadError, setLoadError] = useState<boolean>(false);
+  const [reloadKey, setReloadKey] = useState<number>(0);
+  const history = useHistory();
   // brauzerning navigatsiya tarixini boshqarish,sahifadan sahifaga dasturiy yo'l bilan o'tish mumkin.
-  
-  
+
+
   useEffect(() => {
     // componentDidMount
+    let active = true; // ignore responses of outdated requests
+    setLoading(true);
+    setLoadError(false);
+
     const product = new ProductService();
     product
     .getProducts(productSearch)
-    .then((data) => setProducts(data)) // callback
-    .catch((err) => console.log(err)); // callback
-  }, [productSearch]);
+    .then((data) => {
+      if (active) setProducts(data);
+    })
+    .catch((err) => {
+      console.log(err);
+      if (active) {
+        setProducts([]);
+        setLoadError(true);
+      }
+    })
+    .finally(() => {
+      if (active) setLoading(false);
+    });
+
+    return () => {
+      active = false;
+    };
+  }, [productSearch, reloadKey]);
 
   // search text ni boshatish
   useEffect(() => {
-    if (searchText === ""){
-      productSearch.search = "";
-      setProductSearch({ ...productSearch});
+    if (searchText === "" && productSearch.search) {
+      setProductSearch((prev) => ({ ...prev, page: 1, search: "" }));
     }
   }, [searchText]);
 
   /** HANDLER */
-  // food category handler dish,drink,other
+  // product collection handler
   const searchCollectionHandler = (collection: ProductCollection) => {
-   productSearch.page = 1;
-   productSearch.productCollection = collection;
-   setProductSearch({ ...productSearch});
+    setProductSearch((prev) => ({ ...prev, page: 1, productCollection: collection }));
   };
   // new, price, views
   const searchOrderHandler = (order: string) => {
-    productSearch.page = 1;
-   productSearch.order = order;
-   setProductSearch({ ...productSearch});
-  }
+    setProductSearch((prev) => ({ ...prev, page: 1, order: order }));
+  };
   // search product text based
   const searchProductHandler = () => {
-    productSearch.search = searchText;
-    setProductSearch({ ...productSearch});
-
+    setProductSearch((prev) => ({ ...prev, page: 1, search: searchText.trim() }));
   };
   // pagination changes
   const paginationHandler = (e: ChangeEvent<any>, value: number) => {
-    productSearch.page = value;
-    setProductSearch({ ...productSearch});
+    setProductSearch((prev) => ({ ...prev, page: value }));
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const chooseDishHandler = (id: string) => {
        history.push(`/products/${id}`);
   };
 
+  const addToCartHandler = (e: React.MouseEvent, product: Product) => {
+    e.stopPropagation();
+    onAdd({
+      _id: product._id,
+      quantity: 1,
+      name: product.productName,
+      price: product.productPrice,
+      image: product.productImages[0],
+    });
+    sweetTopSmallSuccessAlert(`${product.productName} added to basket`, 1500);
+  };
+
+  // a full page means there may be more products on the next page
+  const hasNextPage = !loading && products.length === productSearch.limit;
+
 
   const categories = [
     { label: "Skincare", value: ProductCollection.SKINCARE },
     { label: "Makeup", value: ProductCollection.MAKEUP },
+    { label: "Hair care", value: ProductCollection.HAIR_CARE },
     { label: "Body care", value: ProductCollection.BODY_CARE },
     { label: "Fragrance", value: ProductCollection.FRAGRANCE },
+    { label: "Gift sets", value: ProductCollection.GIFTS },
     { label: "Other", value: ProductCollection.OTHER },
   ];
 
@@ -168,17 +203,33 @@ export default function Products(props: ProductsProps) {
         </Stack>
 
         <Stack className={"grid4"}>
-          {products.length !== 0 ? (
+          {loading ? (
+            Array.from({ length: productSearch.limit }).map((_, index) => (
+              <ProductCardSkeleton key={index} />
+            ))
+          ) : loadError ? (
+            <Box className={"load-error"}>
+              We couldn't load the products. Please check your connection.
+              <Button className={"retry-btn"} onClick={() => setReloadKey((key) => key + 1)}>
+                Try again
+              </Button>
+            </Box>
+          ) : products.length !== 0 ? (
             products.map((product: Product) => {
               const imagePath = `${serverApi}/${product.productImages[0]}`;
               return (
                 <Box
                   key={product._id}
                   className={"pcard"}
+                  role={"link"}
+                  tabIndex={0}
                   onClick={() => chooseDishHandler(product._id)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") chooseDishHandler(product._id);
+                  }}
                 >
                   <Box className={"pcard-img"}>
-                    <img src={imagePath} alt={product.productName} />
+                    <img src={imagePath} alt={product.productName} onError={handleImageError} />
                     <span className={"pcard-chip"}>{product.productCollection}</span>
                     <span
                       className={"pcard-fav"}
@@ -188,16 +239,8 @@ export default function Products(props: ProductsProps) {
                     </span>
                     <button
                       className={"pcard-cart-btn"}
-                      onClick={(e) => {
-                        onAdd({
-                          _id: product._id,
-                          quantity: 1,
-                          name: product.productName,
-                          price: product.productPrice,
-                          image: product.productImages[0],
-                        });
-                        e.stopPropagation();
-                      }}
+                      aria-label={`Add ${product.productName} to basket`}
+                      onClick={(e) => addToCartHandler(e, product)}
                     >
                       <ShoppingCartIcon sx={{ fontSize: 16 }} />
                     </button>
@@ -222,13 +265,19 @@ export default function Products(props: ProductsProps) {
               );
             })
           ) : (
-            <Box className="no-data">Products are not available!</Box>
+            productSearch.search ? (
+              <Box className={"no-data no-results"}>
+                No results for "{productSearch.search}"
+              </Box>
+            ) : (
+              <Box className="no-data">Products are not available!</Box>
+            )
           )}
         </Stack>
 
         <Stack className={"pagination-section"}>
           <Pagination
-            count={products.length !== 0
+            count={hasNextPage
               ? productSearch.page + 1
               : productSearch.page}
             page={productSearch.page}
@@ -310,6 +359,7 @@ export default function Products(props: ProductsProps) {
             </Box>
             <Box className={"address-map-box"}>
               <iframe
+                title={"Yasmin Cosmetics store location"}
                 src="https://www.google.com/maps?q=Lotte+World+Tower,+Seoul&output=embed"
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>

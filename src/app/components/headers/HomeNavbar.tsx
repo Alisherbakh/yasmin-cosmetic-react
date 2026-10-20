@@ -20,6 +20,8 @@ interface HomeNavbarProps {
   anchorEl: HTMLElement | null;
   handleCloseLogout: () => void;
   handleLogoutRequest: () => void;
+  /** mobil: tepadagi navbar o'rniga MobileHeader chiziladi — bu yerda faqat hero qismi ko'rsatiladi */
+  heroOnly?: boolean;
 }
 
 
@@ -38,6 +40,7 @@ export default function HomeNavbar(props:HomeNavbarProps) {
     anchorEl,
     handleCloseLogout,
     handleLogoutRequest,
+    heroOnly,
   } = props;
   const {authMember} = useGlobals();
   
@@ -49,6 +52,7 @@ export default function HomeNavbar(props:HomeNavbarProps) {
 
   return (
     <div className="home-navbar">
+      {!heroOnly && (
       <div className="home-navbar-topbar">
       <Container className="navbar-container">
         <Stack className="menu">
@@ -177,6 +181,7 @@ export default function HomeNavbar(props:HomeNavbarProps) {
         </Stack>
       </Container>
       </div>
+      )}
       <div className="home-navbar-hero">
         <Box className={"hero-bg-layers"} aria-hidden={"true"}>
           <Box className={"hero-bg-layer hero-bg-layer-1"} />

@@ -17,6 +17,9 @@ import { sweetErrorHandling, sweetTopSuccessAlert } from "../lib/sweetAlert";
 import { Messages } from "../lib/config";
 import MemberService from "./services/MemberService";
 import { useGlobals } from "./hooks/useGlobals";
+import useDeviceDetect from "./hooks/useDeviceDetect";
+import MobileHeader from "./components/headers/MobileHeader";
+import "../css/mobile/mobile.css";
 
 
 function App() {
@@ -28,6 +31,9 @@ function App() {
     const [signupOpen, setSignupOpen] = useState<boolean>(false);
     const [loginOpen, setLoginOpen] = useState<boolean>(false);
     const [anchorEl, setAnchorEl] = useState<HTMLElement | null>(null);
+    // autore-next'dagi kabi: telefonda alohida mobil navigatsiya (ilova paneli + pastki tab bar)
+    const device = useDeviceDetect();
+    const isMobile = device === "mobile";
 
     // start every new page from the top
     useEffect(() => {
@@ -67,7 +73,39 @@ function App() {
     };
 
   return (
-    <div className={"app-shell"}>
+    <div className={"app-shell"} id={isMobile ? "mobile-wrap" : "pc-wrap"}>
+  {isMobile ? (
+    <>
+      <MobileHeader
+        cartItems={cartItems}
+        onAdd={onAdd}
+        onRemove={onRemove}
+        onDelete={onDelete}
+        onDeleteAll={onDeleteAll}
+        setSignupOpen={setSignupOpen}
+        setLoginOpen={setLoginOpen}
+        handleLogoutRequest={handleLogoutRequest}
+      />
+      {/* bosh sahifada hero (rasm + "Welcome to Yasmin Cosmetics") mobilda ham qoladi, faqat navbarsiz */}
+      {location.pathname === "/" && (
+        <HomeNavbar
+          heroOnly
+          cartItems={cartItems}
+          onAdd={onAdd}
+          onRemove={onRemove}
+          onDelete={onDelete}
+          onDeleteAll={onDeleteAll}
+          setSignupOpen={setSignupOpen}
+          setLoginOpen={setLoginOpen}
+          anchorEl={anchorEl}
+          handleLogoutClick={handleLogoutClick}
+          handleCloseLogout={handleCloseLogout}
+          handleLogoutRequest={handleLogoutRequest}
+        />
+      )}
+    </>
+  ) : (
+  <>
   {location.pathname === "/" ? (<HomeNavbar
   cartItems=
   {cartItems} 
@@ -96,6 +134,8 @@ function App() {
     handleCloseLogout={handleCloseLogout}
     handleLogoutRequest={handleLogoutRequest}
     /> )}
+  </>
+  )}
         <main className={"app-body"}>
         <Switch>
           <Route path="/products">

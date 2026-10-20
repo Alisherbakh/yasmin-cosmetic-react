@@ -1,0 +1,296 @@
+/**
+ * MOBIL NAVIGATSIYA — autore-next'dagi mobil tuzilma (ilova paneli + pastki tab bar + bottom sheet).
+ * Faqat telefonda (useDeviceDetect → "mobile") ishlaydi: #mobile-wrap ichida yoki m- klasslari orqali.
+ * Dizayn tizimi o'zgarmagan: loyihaning o'z ranglari (--rose, --gold, --ink, --blush, --cream, --hairline)
+ * va shriftlari (Fraunces logo, Poppins matn) ishlatiladi. Desktop'ga hech qanday ta'sir qilmaydi.
+ */
+
+#mobile-wrap {
+  --m-appbar-h: 60px;
+  --m-tabbar-h: 64px;
+  --m-ease: cubic-bezier(0.23, 1, 0.32, 1);
+  /* pastki tab bar kontentni yopib qo'ymasligi uchun joy (iPhone pastki chizig'i ham hisobga olinadi) */
+  padding-bottom: calc(var(--m-tabbar-h) + env(safe-area-inset-bottom));
+  background: var(--cream);
+  /* ekrandan chiqib ketgan element sahifani yon tomonga kengaytirib, telefonda butun sahifani
+     kichraytirib yubormasligi uchun ("clip" — sticky ilova panelini buzmaydi) */
+  overflow-x: clip;
+}
+
+/* ---------- ilova paneli (tepada) ---------- */
+#mobile-wrap .m-appbar {
+  position: sticky;
+  top: 0;
+  z-index: 1100;
+  height: var(--m-appbar-h);
+  padding: 0 8px 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: saturate(160%) blur(10px);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  border-bottom: 1px solid var(--hairline);
+  box-sizing: border-box;
+}
+
+#mobile-wrap .m-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-decoration: none;
+}
+
+#mobile-wrap .m-logo .brand-logo-main {
+  font-family: "Fraunces";
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: 0.5px;
+  color: var(--rose);
+}
+
+#mobile-wrap .m-logo .brand-logo-sub {
+  margin-top: 2px;
+  font-family: "Poppins";
+  font-size: 8px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  color: var(--gold);
+}
+
+#mobile-wrap .m-logo .brand-logo-mark {
+  font-size: 8px;
+}
+
+#mobile-wrap .m-appbar-actions {
+  flex-direction: row;
+  align-items: center;
+  gap: 2px;
+}
+
+/* savat ikonkasi va menyu tugmasi — barmoq uchun kamida 44px */
+#mobile-wrap .m-appbar-actions .MuiIconButton-root {
+  width: 44px;
+  height: 44px;
+  color: var(--ink);
+}
+
+#mobile-wrap .m-appbar-actions img {
+  width: 22px;
+  height: 22px;
+}
+
+/* ---------- pastki tab bar ---------- */
+#mobile-wrap .m-tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1100;
+  height: calc(var(--m-tabbar-h) + env(safe-area-inset-bottom));
+  padding-bottom: env(safe-area-inset-bottom);
+  display: flex;
+  align-items: stretch;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: saturate(160%) blur(10px);
+  -webkit-backdrop-filter: saturate(160%) blur(10px);
+  border-top: 1px solid var(--hairline);
+  box-sizing: border-box;
+}
+
+#mobile-wrap .m-tab {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  font-family: "Poppins";
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--ink-soft);
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.2s var(--m-ease);
+}
+
+#mobile-wrap .m-tab-icon {
+  width: 46px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  transition: background 0.2s var(--m-ease);
+}
+
+#mobile-wrap .m-tab-icon svg {
+  font-size: 22px;
+}
+
+#mobile-wrap .m-tab.is-active {
+  color: var(--rose);
+  font-weight: 600;
+}
+
+#mobile-wrap .m-tab.is-active .m-tab-icon {
+  background: var(--rose-soft);
+}
+
+#mobile-wrap .m-tab:active .m-tab-icon {
+  transform: scale(0.94);
+}
+
+/* bosh sahifa hero'si: mobilda navbarsiz, ilova paneli ostida */
+#mobile-wrap .home-navbar-hero {
+  min-height: 460px;
+}
+
+#mobile-wrap .home-navbar .hero-container {
+  padding-top: 0;
+}
+
+/* ---------- bottom sheet (menyu) — Drawer portal orqali #mobile-wrap'dan tashqarida chiziladi ---------- */
+.MuiDrawer-paper.mobile-drawer.m-sheet {
+  width: 100%;
+  max-width: 100%;
+  max-height: 85vh;
+  border-radius: 22px 22px 0 0;
+  padding-bottom: env(safe-area-inset-bottom);
+  overflow-y: auto;
+}
+
+.m-sheet-handle {
+  display: block;
+  width: 40px;
+  height: 4px;
+  margin: 10px auto 4px;
+  border-radius: 2px;
+  background: var(--hairline);
+  flex-shrink: 0;
+}
+
+.m-sheet .m-sheet-profile {
+  margin: 8px 16px 4px;
+  padding: 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, var(--rose-soft) 0%, var(--blush) 100%);
+  border: 1px solid var(--hairline);
+}
+
+.m-sheet .m-sheet-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+  flex-shrink: 0;
+}
+
+.m-sheet .m-sheet-who {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: "Poppins";
+}
+
+.m-sheet .m-sheet-who strong {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.m-sheet .m-sheet-who span {
+  font-size: 11px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.m-sheet .m-sheet-mypage {
+  padding: 8px 14px;
+  flex-shrink: 0;
+}
+
+.m-sheet .m-sheet-guest {
+  padding: 8px 16px 4px;
+  display: flex;
+  gap: 10px;
+}
+
+.m-sheet .m-sheet-guest .drawer-btn {
+  flex: 1;
+}
+
+.m-sheet .mobile-drawer-links a {
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+}
+
+.m-sheet .mobile-drawer-foot {
+  margin-top: 0;
+}
+
+/* ---------- savat (bottom sheet) ---------- */
+.MuiDrawer-paper.m-basket-sheet {
+  max-height: 85vh;
+  border-radius: 22px 22px 0 0;
+  background: var(--cream);
+  padding-bottom: env(safe-area-inset-bottom);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.m-basket-sheet .basket-frame {
+  width: 100%;
+  max-width: none;
+  min-height: 0;
+  flex: 1;
+  border: none;
+  border-radius: 0;
+}
+
+.m-basket-sheet .basket-frame .orders-main-wrapper {
+  flex: 1;
+  min-height: 0;
+  max-height: none;
+  overflow-y: auto;
+}
+
+/* buyurtma tugmasi doim ko'rinib turadi */
+.m-basket-sheet .basket-frame .basket-order {
+  position: sticky;
+  bottom: 0;
+}
+
+.m-basket-sheet .basket-frame .basket-order .order-btn {
+  min-height: 44px;
+  padding: 11px 20px;
+}
+
+/* ---------- umumiy mobil qoidalar ---------- */
+/* iOS'da input bosilganda sahifa avtomatik kattalashmasligi uchun 16px */
+#mobile-wrap input,
+#mobile-wrap textarea,
+#mobile-wrap select {
+  font-size: 16px;
+}
+
+/* harakatni kamaytirish sozlamasi yoqilgan bo'lsa animatsiyasiz */
+@media (prefers-reduced-motion: reduce) {
+  #mobile-wrap .m-tab,
+  #mobile-wrap .m-tab-icon {
+    transition: none;
+  }
+}

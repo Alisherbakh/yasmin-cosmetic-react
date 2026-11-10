@@ -3,8 +3,8 @@ import { HomePageState } from "../../../lib/types/screen";
 
 
 const initialState: HomePageState = {
-    popularDishes: [],
-    newDishes: [],
+    popularProducts: [],
+    newProducts: [],
     topUsers: [],
 };
 
@@ -12,11 +12,11 @@ const homePageSlice = createSlice({
     name: "homePage", // slice nomi
     initialState,  // yuqoridagi initialState ni beryabmiz
     reducers: {
-        setPopularDishes: (state, action) => {
-            state.popularDishes = action.payload;
+        setPopularProducts: (state, action) => {
+            state.popularProducts = action.payload;
         },
-        setNewDishes: (state, action) => {
-            state.newDishes = action.payload;
+        setNewProducts: (state, action) => {
+            state.newProducts = action.payload;
         },
         setTopUsers: (state, action) => {
             state.topUsers = action.payload;
@@ -25,7 +25,7 @@ const homePageSlice = createSlice({
 });
 
 {/**  actionni export qilinyabdi */}
-export const { setPopularDishes, setNewDishes, setTopUsers } = homePageSlice.actions;
+export const { setPopularProducts, setNewProducts, setTopUsers } = homePageSlice.actions;
 
 
 {/**  sliceni export qilinyabdi */}

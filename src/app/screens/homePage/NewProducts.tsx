@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { retrieveNewDishes } from "./selector";
+import { retrieveNewProducts } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { serverApi } from "../../../lib/config";
 import StarRating from "../../components/common/StarRating";
@@ -14,22 +14,22 @@ import ProductCardSkeleton from "../../components/common/ProductCardSkeleton";
 import { handleImageError } from "../../../lib/image";
 
 /** REDUX SELECTOR define process */
-const newDishesRetriever = createSelector(
-  retrieveNewDishes,
-  (newDishes) => ({ newDishes })
+const newProductsRetriever = createSelector(
+  retrieveNewProducts,
+  (newProducts) => ({ newProducts })
 );
 
-interface NewDishesProps {
+interface NewProductsProps {
   loading: boolean;
 }
 
 
-export default function NewDishes(props: NewDishesProps) {
+export default function NewProducts(props: NewProductsProps) {
 const { loading } = props;
-const { newDishes } = useSelector(newDishesRetriever); // selector calling
+const { newProducts } = useSelector(newProductsRetriever); // selector calling
 const history = useHistory();
 
-const chooseDishHandler = (id: string) => {
+const chooseProductHandler = (id: string) => {
   history.push(`/products/${id}`);
 };
   return (
@@ -45,8 +45,8 @@ const chooseDishHandler = (id: string) => {
           <Stack className={"cards-frame"}>
             {loading ? (
               [0, 1, 2, 3].map((index) => <ProductCardSkeleton key={index} />)
-            ) : newDishes.length !== 0 ? (
-              newDishes.map((product: Product) => {
+            ) : newProducts.length !== 0 ? (
+              newProducts.map((product: Product) => {
                 const imagePath = `${serverApi}/${product.productImages[0]}`;
                 const sizeVolume = product.productVolume;
                 return (
@@ -55,9 +55,9 @@ const chooseDishHandler = (id: string) => {
                     className={"pcard"}
                     role={"link"}
                     tabIndex={0}
-                    onClick={() => chooseDishHandler(product._id)}
+                    onClick={() => chooseProductHandler(product._id)}
                     onKeyDown={(e) => {
-                      if (e.key === "Enter") chooseDishHandler(product._id);
+                      if (e.key === "Enter") chooseProductHandler(product._id);
                     }}
                   >
                     <Box className={"pcard-img"}>

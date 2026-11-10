@@ -6,16 +6,16 @@ const selectHomePage = (state: AppRootState) => state.homePage;
 {/** screen folderdagi AppRootState dan homepage ni belgila va uni selectHomepage deb olyabmiz */}
 
 
-{/**  Homepage dan popularDishes ni belgila */}
-export const retrievePopularDishes = createSelector(
+{/**  Homepage dan popularProducts ni belgila */}
+export const retrievePopularProducts = createSelector(
     selectHomePage, 
-    (HomePage) => HomePage.popularDishes
+    (HomePage) => HomePage.popularProducts
 );
 
-{/**  Homepage dan newDishes ni belgila */}
-export const retrieveNewDishes = createSelector(
+{/**  Homepage dan newProducts ni belgila */}
+export const retrieveNewProducts = createSelector(
     selectHomePage, 
-    (HomePage) => HomePage.newDishes
+    (HomePage) => HomePage.newProducts
 );
 
 {/**  Homepage dan topUsersni  ni belgila */}

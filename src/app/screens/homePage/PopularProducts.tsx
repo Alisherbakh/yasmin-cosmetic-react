@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
-import { retrievePopularDishes } from "./selector";
+import { retrievePopularProducts } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { serverApi } from "../../../lib/config";
 import StarRating from "../../components/common/StarRating";
@@ -14,27 +14,27 @@ import ProductCardSkeleton from "../../components/common/ProductCardSkeleton";
 import { handleImageError } from "../../../lib/image";
 
 /** REDUX SELECTOR define process */
-const popularDishesRetriever = createSelector(
-  retrievePopularDishes,
-  (popularDishes) => ({ popularDishes })
+const popularProductsRetriever = createSelector(
+  retrievePopularProducts,
+  (popularProducts) => ({ popularProducts })
 );
 
-interface PopularDishesProps {
+interface PopularProductsProps {
   loading: boolean;
 }
 
 
-export default function PopularDishes(props: PopularDishesProps) {
+export default function PopularProducts(props: PopularProductsProps) {
   const { loading } = props;
-  const { popularDishes } = useSelector(popularDishesRetriever); // selector calling
+  const { popularProducts } = useSelector(popularProductsRetriever); // selector calling
   const history = useHistory();
 
-  const chooseDishHandler = (id: string) => {
+  const chooseProductHandler = (id: string) => {
     history.push(`/products/${id}`);
   };
 
   return (
-    <div className="popular-dishes-frame">
+    <div className="popular-products-frame">
       <Container>
         <Stack className="popular-section">
           <Stack className={"sec-head"} flexDirection={"row"} justifyContent={"space-between"} alignItems={"flex-end"}>
@@ -46,8 +46,8 @@ export default function PopularDishes(props: PopularDishesProps) {
           <Stack className="cards-frame">
             {loading ? (
               [0, 1, 2, 3].map((index) => <ProductCardSkeleton key={index} />)
-            ) : popularDishes.length !== 0 ? (
-              popularDishes.map((product: Product) => {
+            ) : popularProducts.length !== 0 ? (
+              popularProducts.map((product: Product) => {
                 const imagePath = `${serverApi}/${product.productImages[0]}`;
                 return (
                   <Box
@@ -55,9 +55,9 @@ export default function PopularDishes(props: PopularDishesProps) {
                     className={"pcard"}
                     role={"link"}
                     tabIndex={0}
-                    onClick={() => chooseDishHandler(product._id)}
+                    onClick={() => chooseProductHandler(product._id)}
                     onKeyDown={(e) => {
-                      if (e.key === "Enter") chooseDishHandler(product._id);
+                      if (e.key === "Enter") chooseProductHandler(product._id);
                     }}
                   >
                     <Box className={"pcard-img"}>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Statistics from "./Statistics";
-import PopularDishes from "./PopularDishes";
-import NewDishes from "./NewDishes";
+import PopularProducts from "./PopularProducts";
+import NewProducts from "./NewProducts";
 import Advertisement from "./Advertisement";
 import ActiveUsers from "./ActiveUsers";
 import Testimonials from "./Testimonials";
@@ -9,7 +9,7 @@ import "../../../css/home.css";
 
 import { useDispatch } from "react-redux";
 import { Dispatch } from "@reduxjs/toolkit";
-import { setNewDishes, setPopularDishes, setTopUsers } from "./slice";
+import { setNewProducts, setPopularProducts, setTopUsers } from "./slice";
 import { Product } from "../../../lib/types/product";
 import ProductService from "../../services/ProductService";
 import { Member } from "../../../lib/types/member";
@@ -17,14 +17,14 @@ import MemberService from "../../services/MemberService";
 
 /** REDUX SLICE define process */
 const actionDispatch = (dispatch: Dispatch) => ({
-  setPopularDishes: (data: Product[])=> dispatch(setPopularDishes(data)),
-  setNewDishes: (data: Product[])=> dispatch(setNewDishes(data)),
+  setPopularProducts: (data: Product[])=> dispatch(setPopularProducts(data)),
+  setNewProducts: (data: Product[])=> dispatch(setNewProducts(data)),
   setTopUsers: (data: Member[])=> dispatch(setTopUsers(data))
 });
 
 
 export default function HomePage() {
-  const { setPopularDishes, setNewDishes, setTopUsers } = actionDispatch(useDispatch()); //calling Slice: Data => Store
+  const { setPopularProducts, setNewProducts, setTopUsers } = actionDispatch(useDispatch()); //calling Slice: Data => Store
   const [productsLoading, setProductsLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -35,7 +35,7 @@ export default function HomePage() {
       limit: 4,
       order: "productViews",
     })
-    .then((data) => setPopularDishes(data))
+    .then((data) => setPopularProducts(data))
     .catch((err) => console.log(err));
 
     const newRequest = product.getProducts({
@@ -43,7 +43,7 @@ export default function HomePage() {
       limit: 4,
       order: "createdAt",
     })
-    .then((data) => setNewDishes(data))
+    .then((data) => setNewProducts(data))
     .catch((err) => console.log(err));
 
     Promise.all([popularRequest, newRequest]).then(() => setProductsLoading(false));
@@ -59,8 +59,8 @@ export default function HomePage() {
   return (
     <div className={"homepage"}>
       <Statistics />
-      <PopularDishes loading={productsLoading} />
-      <NewDishes loading={productsLoading} />
+      <PopularProducts loading={productsLoading} />
+      <NewProducts loading={productsLoading} />
       <Advertisement />
       <ActiveUsers />
       <Testimonials />

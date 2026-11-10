@@ -114,7 +114,7 @@ export default function Products(props: ProductsProps) {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const chooseDishHandler = (id: string) => {
+  const chooseProductHandler = (id: string) => {
        history.push(`/products/${id}`);
   };
 
@@ -223,9 +223,9 @@ export default function Products(props: ProductsProps) {
                   className={"pcard"}
                   role={"link"}
                   tabIndex={0}
-                  onClick={() => chooseDishHandler(product._id)}
+                  onClick={() => chooseProductHandler(product._id)}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter") chooseDishHandler(product._id);
+                    if (e.key === "Enter") chooseProductHandler(product._id);
                   }}
                 >
                   <Box className={"pcard-img"}>

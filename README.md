@@ -1,46 +1,60 @@
-# Getting Started with Create React App
+# Yasmin — Cosmetics Store (Frontend)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app), using the [Redux](https://redux.js.org/) and [Redux Toolkit](https://redux-toolkit.js.org/) TS template.
+Customer storefront for **Yasmin**, an online cosmetics shop. Built with React, TypeScript and Redux Toolkit, connected to the [Yasmin backend](https://github.com/Alisherbakh/yasmin-cosmetic) (Express + MongoDB).
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Home page** — popular and new products, store statistics, active users, events and testimonials
+- **Products** — browse by collection (skincare, makeup, hair care, body care, fragrance, gifts), search, sort, and product detail page
+- **Basket** — add, remove and change quantities; saved in the browser
+- **Orders** — paused / processing / finished tabs; pay or cancel a paused order, confirm a processing one
+- **User page** — profile and settings
+- **Help page** — FAQ and terms
+- **Mobile layout** — app bar, tab bar and bottom sheets
+- **Real-time** — Socket.io connection through a React context
 
-### `npm start`
+## Tech stack
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+React 18 · TypeScript · Redux Toolkit · React Router · MUI · Axios · Socket.io client · Swiper · SweetAlert2
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+## Getting started
 
-### `npm test`
+Requirements: Node.js and Yarn. The backend must be running (default port `3003`).
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```bash
+yarn install
+```
 
-### `npm run build`
+Create `.env`:
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+```
+REACT_APP_API_URL=http://localhost:3003
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Run:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+```bash
+yarn start          # development, http://localhost:3000
+yarn build          # production build in build/
+yarn start:prod     # serve the build on port 3204
+```
 
-### `npm run eject`
+## Deployment
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+`deploy.sh` pulls `master`, installs dependencies, builds and starts the app with PM2 (`YASMIN-REACT`).
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+./deploy.sh
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+## Project structure
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+src/app/screens      pages: homePage, productsPage, ordersPage, userPage, helpPage
+src/app/components   headers, footer, auth modal, shared UI
+src/app/services     API calls (MemberService, ProductService, OrderService)
+src/app/hooks        useBasket, useGlobals, useDeviceDetect
+src/app/context      global and socket context
+src/lib              config, types, enums, static data
+src/css              page styles and mobile styles
+```

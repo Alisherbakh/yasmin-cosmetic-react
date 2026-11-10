@@ -616,7 +616,7 @@
   justify-content: space-between;
 }
 
-.products-page .products .dishes-filter-section {
+.products-page .products .products-filter-section {
   margin-top: 65px;
   width: 90%;
   display: flex;
@@ -624,14 +624,14 @@
   justify-content: flex-end;
 }
 
-.products-page .products .dishes-filter-box {
+.products-page .products .products-filter-box {
   height: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
 }
 
-.products-page .products .dishes-filter-box .order {
+.products-page .products .products-filter-box .order {
   margin-right: 20px;
 }
 
